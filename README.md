@@ -79,19 +79,19 @@ Below are the rules used to construct a Red-Black tree [3]:
 1. If the tree is empty, a new node is created as the root node with a black color.
 2. If the tree is not empty, a new node is added as a leaf node with a red color.
 3. If the parent of a new node is black, no further adjustments are needed, and the insertion process exits.
-4. If the parent of a new node is red, the color of the parent's sibling is checked:
-   - If the sibling's color is black, rotations and recoloring are performed to maintain the Red-Black tree properties.
-   - If the sibling's color is red, the node is recolored. Additionally, if the parent's parent of the new node is not the root node, the process is repeated by recoloring and rechecking the node until the Red-Black tree properties are satisfied.
+4. If the parent of a new node is red, the color of the parent's sibling is checked:  
+   a. If the sibling's color is black, rotations and recoloring are performed to maintain the Red-Black tree properties.  
+   b. If the sibling's color is red, the node is recolored. Additionally, if the parent's parent of the new node is not the root node, the process is repeated by recoloring and rechecking the node until the Red-Black tree properties are satisfied.
 
 Let's explore the insertion process in the Red-Black tree using the following elements from javatpoint.com [3]:
 
 **10, 18, 7, 15, 16, 30, 25, 40, 60**
 
-Step 1: At the beginning, the tree is empty, and we introduce a new node with a value of 10. Since this is the first node in the tree, it becomes the root node. As mentioned earlier, the root node must always be colored black, as illustrated below:
+**Step 1:** At the beginning, the tree is empty, and we introduce a new node with a value of 10. Since this is the first node in the tree, it becomes the root node. As mentioned earlier, the root node must always be colored black, as illustrated below:
 
 <img src="images/insert1.png" alt="insert1" width="100"/>
 
-Step 2: The subsequent node is 18. Since 18 is greater than 10, it will be placed to the right of 10, as demonstrated below:
+**Step 2:** The subsequent node is 18. Since 18 is greater than 10, it will be placed to the right of 10, as demonstrated below:
 
 <img src="images/insert2.png" alt="insert2" width="120"/>
 
@@ -99,13 +99,13 @@ Following the second rule of the Red-Black tree, when the tree is not empty, the
 
 Next, we proceed to check the third rule of the Red-Black tree, which requires that the parent of the new node must be black. In the previous figure, it can be observed that the parent of node 18 is indeed black, thereby confirming that the tree maintains the properties of a valid Red-Black tree.  
 
-Step 3: Moving forward, we introduce a new node with a value of 7 and assign it the color Red. Since 7 is less than 10, it is placed to the left of node 10, as illustrated below:
+**Step 3:** Moving forward, we introduce a new node with a value of 7 and assign it the color Red. Since 7 is less than 10, it is placed to the left of node 10, as illustrated below:
 
 <img src="images/insert3.png" alt="insert3" width="130"/>
 
 Now, let's proceed to validate the third rule of the Red-Black tree, which ensures that the parent of the new node is black. Upon observation, we can confirm that the parent of node 7 is indeed black in color, thus adhering to the properties of the Red-Black tree.
 
-Step 4: Moving on to the next element, which is 15, we find that it is greater than 10 but less than 18. Consequently, a new node is created to the left of node 18. As per the Red-Black tree rules, the node 15 will be colored Red since the tree is not empty.
+**Step 4:** Moving on to the next element, which is 15, we find that it is greater than 10 but less than 18. Consequently, a new node is created to the left of node 18. As per the Red-Black tree rules, the node 15 will be colored Red since the tree is not empty.
 
 The preceding tree exhibits a violation of the Red-Black tree property due to the presence of a Red-red parent-child relationship. To rectify this, we need to apply specific rules to maintain a valid Red-Black tree structure.
 
@@ -115,7 +115,7 @@ Rule 4 of Red-Black trees states that if the new node's parent is Red, we must e
 
 Another crucial check we need to perform is whether the parent's parent of the new node is the root node or not. Upon observation in the above figure, it is evident that the parent's parent of the new node (node 15) is indeed the root node (node 10). As a result, there is no need to recolor the root node in this scenario.
 
-Step 5: Proceeding with the next element, which is 16, we observe that it is greater than 10, but less than 18 and greater than 15. Consequently, node 16 will be placed to the right of node 15. As the tree is not empty, node 16 will be colored Red.
+**Step 5:** Proceeding with the next element, which is 16, we observe that it is greater than 10, but less than 18 and greater than 15. Consequently, node 16 will be placed to the right of node 15. As the tree is not empty, node 16 will be colored Red.
 
 <img src="images/insert5.png" alt="insert5" width="180"/>
 
@@ -133,9 +133,72 @@ Following the rotation, both node 16 and node 18 will undergo recoloring. Node 1
 
 <img src="images/insert8.png" alt="insert8" width="200"/>
 
-Step 6: Moving forward, the next element to insert is 30. Node 30 will be added to the right of node 18. Since the tree is not empty, the color of node 30 will be red.
+**Step 6:** Moving forward, the next element to insert is 30. Node 30 will be added to the right of node 18. Since the tree is not empty, the color of node 30 will be red.
 
 <img src="images/insert9.png" alt="insert9" width="200"/>
+
+The new node's parent and its parent's sibling are both initially Red in color, leading to the application of rule 4b. Rule 4b solely involves recoloring without any need for rotations. Consequently, both the parent (node 18) and its sibling (node 15) change their color to black, as depicted in the image below.
+
+<img src="images/insert10.png" alt="insert10" width="200"/>
+
+Additionally, we need to verify the status of the parent's parent of the new node to determine if it is the root node. In this case, the parent's parent of the new node (node 30) is node 16, and node 16 is not the root node. Consequently, we will reassign the color of node 16 to Red. The parent of node 16 is node 10, and it is not Red in color, thus ensuring there is no Red-red conflict in the tree structure.
+
+<img src="images/insert11.png" alt="insert11" width="200"/>
+
+**Step 7:** Let's now insert the next element, 25, into the tree. Considering the values of existing nodes, we find that 25 falls between 10, 16, 18, and 30. Therefore, it will be placed to the left of node 30. Since the tree is not empty, we'll mark node 25 as Red.
+
+Here comes the tricky part, a Red-red conflict arises since the parent of the newly inserted node is also Red.
+
+To resolve this, we apply rule 4a, which involves both rotation and recoloring. Since there's no parent's sibling in this scenario, we proceed with the rotations first.
+
+Given that the newly inserted node is on the left of its parent, and the parent node is on the right of its parent, a "RL" relationship is formed. As a result, we perform a right rotation, which moves node 25 upwards, while node 30 goes downwards. The figure below illustrates this transformation.
+
+<img src="images/insert12.png" alt="insert12" width="200"/>
+
+Following the initial rotation, an RR relationship is established, prompting a subsequent left rotation. As a result of the right rotation, the central element, 25, assumes the position of the root node. Node 30 will be situated to the right of 25, while node 18 will find its place on the left side of node 25.
+
+<img src="images/insert13.png" alt="insert13" width="220"/>
+
+Now, we proceed with the recoloring step. Nodes 25 and 18 will undergo recoloring. Specifically, node 25 will change its color to black, while node 18 will assume a red color.
+
+<img src="images/insert14.png" alt="insert14" width="220"/>
+
+**Step 8:** Moving on to the next element, which is 40. Considering the values of existing nodes (10, 16, 18, 25, and 30), we find that 40 is greater than all of them. Therefore, node 40 will be placed to the right of node 30. As the tree is not empty, node 40 will be marked as Red in color.
+
+However, we encounter a Red-red conflict between nodes 40 and 30. To address this situation, we will apply rule 4b to resolve the conflict.
+
+<img src="images/insert15.png" alt="insert15" width="220"/>
+
+As the new node's parent and its parent's sibling are both Red in color, recoloring is required. Both nodes change their color to black, as illustrated in the image below.
+
+Following the recoloring, we need to check the parent's parent of the new node, which is node 25 in this case. Since node 25 is not the root node, recoloring will be performed, turning node 25 into Red.
+
+Now, a red-red conflict arises between nodes 25 and 16. Node 25 will now be treated as the new node. As the parent of node 25 is red, and the parent's sibling is black, rule 4a comes into play. Considering that 25 is on the right of node 16, and node 16 is on the right of its parent, an RR relationship is established. Consequently, a left rotation is performed to address this situation. After the left rotation, the median element, 16, becomes the root node, as depicted in the figure below.
+
+<img src="images/insert16.png" alt="insert16" width="220"/>
+
+Following the rotation, recoloring is carried out on nodes 16 and 10. The color of node 10 becomes Red, while the color of node 16 changes to Black, as illustrated in the figure below.
+
+<img src="images/insert17-1.png" alt="insert17-1" width="230"/> 
+
+<img src="images/insert17-2.png" alt="insert17-2" width="230"/>
+
+**Step 9:** Now, let's proceed with the insertion of the next element, 60. Considering the existing values in the tree (16, 25, 30, 40), we find that 60 is greater than all of them. Therefore, node 60 will be placed to the right of node 40. As the tree is not empty, the color of node 60 will be Red.
+
+Upon observing the tree, we can see that a Red-red conflict arises. The parent node is Red in color, and there is no parent's sibling present in the tree. As a result, we will apply rule 4a. The first rotation to be performed will be a left rotation, as there is an RR relationship between the nodes.
+
+<img src="images/insert18.png" alt="insert18" width="250"/>
+
+Upon performing the left rotation, node 40 moves upwards, and node 30 moves downwards, as depicted in the figure below:
+
+<img src="images/insert19.png" alt="insert19" width="250"/>
+
+After the rotation, recoloring is carried out on nodes 30 and 40. The color of node 30 changes to Red, while the color of node 40 changes to Black, as illustrated in the figure below.
+
+<img src="images/insert20.png" alt="insert20" width="250"/>
+
+The tree depicted above adheres to all the properties of a Red-Black tree, making it a valid Red-Black tree. This example has been sourced from javatpoint.com [3].
+
 
 
 
