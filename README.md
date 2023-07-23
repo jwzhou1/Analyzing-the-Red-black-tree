@@ -5,8 +5,6 @@
 * Link The Repository: https://github.com/jwzhou1/FinalResearchPaper.git
 
 
-Note the following is an example outline to help you. Please rework as you need. 
-
 ## Introduction
 - What is the algorithm/datastructure?
 - What is the problem it solves? 
@@ -23,11 +21,11 @@ The most notable characteristic of Red-Black Trees is the color assigned to each
 
 Example of a red–black tree:  
 
-<img src="example1fromwiki.png" alt="redblacktreeexample1" width="500"/>
+<img src="images/example1fromwiki.png" alt="redblacktreeexample1" width="500"/>
 
 Figure 1: A red–black tree with explicit NIL leaves [1]
 
-<img src="example2fromwiki.png" alt="redblacktreeexample1" width="500"/>  
+<img src="images/example2fromwiki.png" alt="redblacktreeexample1" width="500"/>  
 
 Figure 2: A red–black tree with implicit left and right docking points [1]
 
