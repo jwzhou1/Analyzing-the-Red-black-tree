@@ -72,7 +72,35 @@ Let's begin with a comprehensive overview of the time and space complexity of Re
 | Insert    | $O(log n)$   | $O(log n)$ |
 | Delete    | $O(log n)$   | $O(log n)$ |
 
-**Insertion in Red Black tree**
+
+**Search in Red-Black tree**
+
+A Red-Black tree takes O(log n) time for search because it is a type of self-balancing binary search tree. The Red-Black tree maintains its balance by enforcing certain properties that ensure its height remains logarithmic with respect to the number of nodes (n) in the tree.
+
+Because of properties of red-black trees, the longest path from the root to any leaf node cannot be more than twice the length of the shortest path from the root to any leaf node. This guarantees that the tree is balanced, and the height of the tree remains logarithmic with respect to the number of nodes (O(log n)).
+
+As a result, the search operation in a Red-Black tree takes O(log n) time complexity, which is very efficient for large datasets, making it a preferred data structure for various applications.
+
+Since the Red-Black tree is a type of binary search tree, the search operation in a Red-Black tree is analogous to the search operation in a binary search tree.
+
+To better grasp the search operation in a Red-Black tree, let's consider the below binary search tree from Javatpoint.com [3]:
+
+<img src="images/search1.png" alt="search1" />
+
+In the above tree, if we want to search for the value 80, the search process proceeds as follows:
+
+1. We start by comparing 80 with the root node, which is 10. Since 80 is greater than 10, we continue the search on the right subtree.
+2. Next, we compare 80 with the node 15. As 80 is greater than 15, we move to the right child of 15, which is 20.
+3. We reach the leaf node 20, but since 20 is not equal to 80, the search concludes, indicating that the element 80 is not found in the tree.
+
+Throughout each step of the search operation, the tree effectively divides in half. As a result, the Binary Search Tree (BST) structure enables the search to take O(log n) time complexity, making it an efficient search operation for balanced trees like the one shown above.
+
+
+**Insertion in Red-Black tree**
+
+A Red-Black tree takes O(log n) time for insertion because it is designed as a self-balancing binary search tree. The Red-Black tree maintains its balanced structure through a series of color adjustments and rotations during the insertion process.
+
+When inserting a new node into the Red-Black tree, it starts as an ordinary binary search tree insertion. The new node is initially colored as red to preserve the other properties of the Red-Black tree. Once the node is inserted, a series of color adjustments and rotations are performed to restore and maintain the Red-Black tree properties.
 
 Firstly, below are the rules used to construct a Red-Black tree [3]:
 
@@ -175,31 +203,36 @@ Following the recoloring, we need to check the parent's parent of the new node, 
 
 Now, a red-red conflict arises between nodes 25 and 16. Node 25 will now be treated as the new node. As the parent of node 25 is red, and the parent's sibling is black, rule 4a comes into play. Considering that 25 is on the right of node 16, and node 16 is on the right of its parent, an RR relationship is established. Consequently, a left rotation is performed to address this situation. After the left rotation, the median element, 16, becomes the root node, as depicted in the figure below.
 
-<img src="images/insert16.png" alt="insert16" width="220"/>
+<img src="images/insert16.png" alt="insert16" />
 
 Following the rotation, recoloring is carried out on nodes 16 and 10. The color of node 10 becomes Red, while the color of node 16 changes to Black, as illustrated in the figure below.
 
-<img src="images/insert17-1.png" alt="insert17-1" width="230"/> 
+<img src="images/insert17-1.png" alt="insert17-1" /> 
 
-<img src="images/insert17-2.png" alt="insert17-2" width="230"/>
+<img src="images/insert17-2.png" alt="insert17-2" />
 
 **Step 9:** Now, let's proceed with the insertion of the next element, 60. Considering the existing values in the tree (16, 25, 30, 40), we find that 60 is greater than all of them. Therefore, node 60 will be placed to the right of node 40. As the tree is not empty, the color of node 60 will be Red.
 
 Upon observing the tree, we can see that a Red-red conflict arises. The parent node is Red in color, and there is no parent's sibling present in the tree. As a result, we will apply rule 4a. The first rotation to be performed will be a left rotation, as there is an RR relationship between the nodes.
 
-<img src="images/insert18.png" alt="insert18" width="250"/>
+<img src="images/insert18.png" alt="insert18" />
 
 Upon performing the left rotation, node 40 moves upwards, and node 30 moves downwards, as depicted in the figure below:
 
-<img src="images/insert19.png" alt="insert19" width="250"/>
+<img src="images/insert19.png" alt="insert19"/>
 
 After the rotation, recoloring is carried out on nodes 30 and 40. The color of node 30 changes to Red, while the color of node 40 changes to Black, as illustrated in the figure below.
 
-<img src="images/insert20.png" alt="insert20" width="250"/>
+<img src="images/insert20.png" alt="insert20"/>
 
 The tree depicted above adheres to all the properties of a Red-Black tree, making it a valid Red-Black tree. This example has been sourced from javatpoint.com [3].
 
-**Deletion in Red Black tree**  
+
+**Deletion in Red-Black tree**  
+
+A Red-Black tree takes O(log n) time for deletion because it is a self-balancing binary search tree that maintains its balanced structure during the deletion process. When a node is deleted from the Red-Black tree, a series of color adjustments and rotations are performed to restore and preserve the Red-Black tree properties.
+
+The deletion process in a Red-Black tree begins with a standard binary search tree deletion. Once the node is removed from the tree, the tree's properties may be violated, specifically the properties related to color balance and black height. To maintain these properties, a set of restructuring operations, including color adjustments and rotations, are performed.
 
 Now, let's explore the process of deleting a specific node from the Red-Black tree. We will be employing the following rules to achieve the deletion from javatpoint.com [3]:
 
@@ -263,15 +296,89 @@ Upon examining the tree above, we can discern that the sibling of the double bla
 
 After adding its color to the parent node, the sibling of the double black node, which is node 30, changes to red, as illustrated in the figure below. 
 
+<img src="images/delete10.png" alt="delete10" width="250"/>  
+
 Thus, we can see that the issue of the double black node no longer exists and that it remains a Red-Black tree by examining the above tree.
 
+**Case 4:** Handling the situation when the sibling of the double black node is Red.
 
+To resolve this scenario, the following steps should be taken:
 
+1. Exchange the colors of the parent node and its sibling.
+2. Perform a rotation on the parent node in the direction of the double black node.
+3. Reapply the cases to ensure the Red-Black tree properties are maintained.
 
-Make sure to include the following:
-- Time Complexity
-- Space Complexity
-- General analysis of the algorithm/datastructure
+For better comprehension, let's illustrate this case with a practical example:
+
+Let's consider a Red-Black tree and the node 15 that we want to delete.
+
+<img src="images/delete11.png" alt="delete11" />  
+
+In the beginning, the value 15 is substituted with a nil value, resulting in the node becoming double black. Given that the sibling of the double black node is Red, the color of node 20 is modified to Red, and the color of node 30 is altered to Black.
+
+After the color swapping process, the rotation to address the double black situation will take place. Node 30 will ascend, while node 20 will descend, as illustrated in the following diagram.
+
+<img src="images/delete12.png" alt="delete12" />  
+
+In the above tree, the double black situation remains unresolved. It meets the criteria of case 3, where the double black's sibling is black, and both its children are black. To address this situation, we first remove the double black status from the node and assign the black color to its parent node. Consequently, the color of the double black's sibling, i.e., node 25, changes to Red, as illustrated in the following figure.
+
+<img src="images/delete13.png" alt="delete13" />  
+
+In the above tree diagram, it is evident that the double black scenario has been effectively resolved. Furthermore, the tree satisfies all the essential properties of a Red-Black tree.
+
+**Case 5:** When the sibling of the double black node is black, and the sibling's child, which is far from the double black node, is black, but the nearer child to the double black node is red.
+
+1. Exchange the colors of the double black's sibling and the sibling child that is closer to the double black node.
+2. Rotate the sibling node in the opposite direction of the double black node.
+3. Proceed to handle the scenario as per case 6.
+
+Suppose we intend to delete the node 1 in the following tree.
+
+<img src="images/delete14.png" alt="delete14" />  
+
+Initially, we substitute the value 1 with a nil value, resulting in the node becoming double black, as both the nodes, i.e., 1 and nil, are black. This situation aligns with case 3, which states that if the double black's sibling is black and both its children are black, certain actions are required.
+
+Firstly, we eliminate the double black status from the nil node. Since the parent of the double black node is black, when we add the black color to the parent node, it becomes double black. After this color addition, the double black's sibling changes its color to Red, as depicted below.
+
+<img src="images/delete15.png" alt="delete15" />  
+
+As seen in the previous illustration, the double black issue persists in the tree. Thus, we need to reapply the relevant cases to resolve it. In this situation, we will apply case 5 since node 30 is the sibling of node 5 and is black in color. Additionally, the child of node 30 that is farther from node 5 is black, and the nearer child to node 5 is Red. 
+
+To handle case 5, we will first swap the colors of node 30 and node 25, resulting in the color of node 30 changing to Red, and the color of node 25 changing to Black, as depicted below.
+
+<img src="images/delete16.png" alt="delete16" />  
+
+After completing the color swapping between the nodes, the next step is to perform a rotation of the sibling in the opposite direction of the double black node. In this rotation, node 30 will descend, while node 25 will ascend, as illustrated below.  
+
+<img src="images/delete17.png" alt="delete17" />  
+
+In the above provided tree, it is evident that the double black situation remains unresolved. Therefore, we must proceed with case 6. Before diving into case 6, let's first understand what it entails.
+
+**Case 6:** When the sibling of the double black node is black, and the far child is Red:
+
+1. Swap the colors of the Parent and its sibling node.
+2. Rotate the parent node towards the direction of the double black node.
+3. Remove the Double black node.
+4. Change the Red color to black.
+
+Let's proceed with applying case 6 to resolve the double black situation in the provided example.
+
+In this case, the double black node is node 5, and its sibling is node 25, which is black in color. The far child of the double black node is node 30, and it is Red in color, as illustrated in the figure below: 
+
+<img src="images/delete18.png" alt="delete18" /> 
+
+Initially, we attempt to swap the colors of the Parent node and its sibling. In this particular case, the parent of node 5 is node 10, and the sibling node is node 25. Since the colors of both nodes are black, no swapping will occur in this step.
+
+Next, we proceed to the second step, which involves rotating the parent in the direction of the double black node. After performing the rotation, node 25 will ascend, while node 10 will descend. The resulting tree structure will be as illustrated in the figure below:
+
+<img src="images/delete19.png" alt="delete19" /> 
+
+In the subsequent step, we eliminate the double black status from node 5, and node 5 imparts its black color to the far child, which is node 30. Consequently, the color of node 30 changes to black, as depicted in the figure below:
+
+<img src="images/delete20.png" alt="delete20" /> 
+
+By executing this step, we successfully address the double black situation, ensuring the Red-Black tree properties are preserved.
+
 
 ## Empirical Analysis
 - What is the empirical analysis?
