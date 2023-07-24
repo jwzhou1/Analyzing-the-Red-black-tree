@@ -67,14 +67,14 @@ While every AVL tree can be transformed into a Red-Black tree by assigning each 
 Let's begin with a comprehensive overview of the time and space complexity of Red-Black Tree operations[4]:
 | OPERATION | AVERAGE CASE | WORST CASE |
 |-----------|--------------|------------|
-| Space     | O(n)         | O(n)       |
-| Search    | O(log n)     | O(log n)   |
-| Insert    | O(log n)     | O(log n)   |
-| Delete    | O(log n)     | O(log n)   |
+| Space     | $O(n)$       | $O(n)$     |
+| Search    | $O(log n)$   | $O(log n)$ |
+| Insert    | $O(log n)$   | $O(log n)$ |
+| Delete    | $O(log n)$   | $O(log n)$ |
 
 **Insertion in Red Black tree**
 
-Below are the rules used to construct a Red-Black tree [3]:
+Firstly, below are the rules used to construct a Red-Black tree [3]:
 
 1. If the tree is empty, a new node is created as the root node with a black color.
 2. If the tree is not empty, a new node is added as a leaf node with a red color.
@@ -198,6 +198,72 @@ After the rotation, recoloring is carried out on nodes 30 and 40. The color of n
 <img src="images/insert20.png" alt="insert20" width="250"/>
 
 The tree depicted above adheres to all the properties of a Red-Black tree, making it a valid Red-Black tree. This example has been sourced from javatpoint.com [3].
+
+**Deletion in Red Black tree**  
+
+Now, let's explore the process of deleting a specific node from the Red-Black tree. We will be employing the following rules to achieve the deletion from javatpoint.com [3]:
+
+**Step 1:** Initially, we begin the deletion process by applying the Binary Search Tree (BST) rules.  
+**Step 2:**  
+**Case 1:** If the node to be deleted is Red, we can directly remove it from the tree.  
+
+To illustrate Case 1, let's consider an example. Let's say we want to delete node 30 from the following tree:  
+
+<img src="images/delete1.png" alt="delete1" width="200"/>
+
+Initially, with the address of the root node in hand, we will apply the Binary Search Tree (BST) approach to search for the desired node, which is 30 in this case. Following the comparison, we find that 30 is greater than both 10 and 20, indicating that 30 is the right child of node 20. As node 30 is a Red leaf node, we can safely delete it from the tree.
+
+Now, let's explore the process of deleting an internal node that has only one child. The first step involves replacing the value of the internal node with the value of its child node. Subsequently, we can proceed to delete the child node from the tree.
+
+**Let's consider another example where we aim to delete the internal node, node 20.**
+
+<img src="images/delete2.png" alt="delete2" width="200"/>
+
+In the scenario where we need to remove an internal node, such as node 20, we cannot directly delete it. Instead, we can replace the value of node 20 with another value. Since node 20 is situated to the right of the root node and possesses only one child, which is node 30, we will update the value of node 20 to 30 while keeping its color unchanged (Black). Subsequently, we can safely delete node 20 (which now acts as a leaf node) from the tree.
+
+<img src="images/delete3.png" alt="delete3" width="200"/>
+
+<img src="images/delete4.png" alt="delete4" width="200"/>
+
+When we encounter the scenario of deleting an internal node with two child nodes, we must choose between two approaches for replacing the value of the internal node (either left subtree or right subtree):
+
+1. **Inorder predecessor**: We will replace the value with the largest value present in the left subtree.
+2. **Inorder successor**: We will replace the value with the smallest value present in the right subtree.
+
+Let’s say we want to remove the node with the value 30 from the following tree:  
+
+<img src="images/delete5.png" alt="delete5" width="250"/>  
+
+Node 30 is located to the right of the root node. In this situation, we will use the inorder successor method. The smallest value in the right subtree is 38, so we will replace the value of 30 with 38 while keeping the node itself red. After replacing the value, we will remove the leaf node, which is 30, from the tree. Since node 30 is a red-colored leaf node, we can simply delete it without having to perform any rotations or recoloring.  
+
+<img src="images/delete6.png" alt="delete6" width="250"/>  
+
+**Case 2:** In the event that the root node is also double black, we can easily remove the double black and change it to a single black node.
+
+**Case 3:** If the sibling of the double black node is black and both of its children are also black:
+   - Remove the double black node
+   - Add its color to the parent(P) node. 
+
+   1. If the parent node is red, it will become black. 
+   2. If the parent node is black, it will become double black. 
+   - The sibling of the double black node will change to red. 
+   - If a double black situation still arises, we can apply other cases to resolve it.
+
+To better understand this case, let’s look at an example. Imagine we want to remove the node with the value 15 from the below tree:  
+
+<img src="images/delete7.png" alt="delete7" width="250"/>  
+
+We cannot just remove node 15 from the tree since it is colored black. Node 15 has two nil children, so we replace the value of 15 with a nil value. Since both node 15 and the nil node are black, the node becomes double black after the replacement, as shown in the figure below:  
+
+<img src="images/delete8.png" alt="delete8" width="250"/>  
+
+Upon examining the tree above, we can discern that the sibling of the double black node is black, and its children are nil, which are also black. Since the sibling and its children are all black, it is unable to transfer its black color to any of them. The parent node of the double black node is red, so the double black node imparts its black color to its parent. As a result, the color of node 20 changes to black, while the nil node becomes a single black, as depicted in the figure below:
+
+<img src="images/delete9.png" alt="delete9" width="250"/>  
+
+After adding its color to the parent node, the sibling of the double black node, which is node 30, changes to red, as illustrated in the figure below. 
+
+Thus, we can see that the issue of the double black node no longer exists and that it remains a Red-Black tree by examining the above tree.
 
 
 
