@@ -113,7 +113,7 @@ Firstly, below are the rules used to construct a Red-Black tree [3]:
 
 Let's explore the insertion process in the Red-Black tree using the following elements from javatpoint.com [3]:
 
-**10, 18, 7, 15, 16, 30, 25, 40, 60**
+**10, 18, 7, 15, 16, 30, 25**
 
 **Step 1:** At the beginning, the tree is empty, and we introduce a new node with a value of 10. Since this is the first node in the tree, it becomes the root node. As mentioned earlier, the root node must always be colored black, as illustrated below:
 
@@ -187,45 +187,98 @@ Following the initial rotation, an RR relationship is established, prompting a s
 
 <img src="images/insert13.png" alt="insert13" width="220"/>
 
-Now, we proceed with the recoloring step. Nodes 25 and 18 will undergo recoloring. Specifically, node 25 will change its color to black, while node 18 will assume a red color.
+Now, we proceed with the recoloring step. Nodes 25, 18 and 15 will undergo recoloring. Specifically, node 25 and 15 will change its color to black, while node 18 will assume a red color.
 
-<img src="images/insert14.png" alt="insert14" width="220"/>
+<img src="images/insert14.png" alt="insert14"/>
 
-**Step 8:** Moving on to the next element, which is 40. Considering the values of existing nodes (10, 16, 18, 25, and 30), we find that 40 is greater than all of them. Therefore, node 40 will be placed to the right of node 30. As the tree is not empty, node 40 will be marked as Red in color.
+The tree depicted above adheres to all the properties of a Red-Black tree, making it a valid Red-Black tree. This example has been sourced from javatpoint.com [3].
 
-However, we encounter a Red-red conflict between nodes 40 and 30. To address this situation, we will apply rule 4b to resolve the conflict.
+Let's explore another insertion example in the Red-Black tree using the following elements from catherine-leung.gitbook [3]:
 
-<img src="images/insert15.png" alt="insert15" width="220"/>
+**30 50 40 20 10**
 
-As the new node's parent and its parent's sibling are both Red in color, recoloring is required. Both nodes change their color to black, as illustrated in the image below.
+Let's start with an empty tree. The images presented below represent null nodes (empty subtrees), which are indicated by black circles.
 
-Following the recoloring, we need to check the parent's parent of the new node, which is node 25 in this case. Since node 25 is not the root node, recoloring will be performed, turning node 25 into Red.
+<img src="images/insert15.png" alt="insert15"/>
 
-Now, a red-red conflict arises between nodes 25 and 16. Node 25 will now be treated as the new node. As the parent of node 25 is red, and the parent's sibling is black, rule 4a comes into play. Considering that 25 is on the right of node 16, and node 16 is on the right of its parent, an RR relationship is established. Consequently, a left rotation is performed to address this situation. After the left rotation, the median element, 16, becomes the root node, as depicted in the figure below.
+We will now insert the node with a value of 30 into the red-black tree. During the insertion process, all nodes are initially added as red nodes.
 
-<img src="images/insert16.png" alt="insert16" />
+<img src="images/insert16.png" alt="insert16"/>
 
-Following the rotation, recoloring is carried out on nodes 16 and 10. The color of node 10 becomes Red, while the color of node 16 changes to Black, as illustrated in the figure below.
+When inserting a node into the red-black tree, if the root node turns out to be red, we need to change its color to black to satisfy the red-black tree properties.
 
-<img src="images/insert17-1.png" alt="insert17-1" /> 
+<img src="images/insert17.png" alt="insert17"/>
 
-<img src="images/insert17-2.png" alt="insert17-2" />
+Let's proceed with the insertion of a node with a value of 50 into the red-black tree. Since the parent node is black, we can directly insert the new node as a red node without making any further adjustments.
 
-**Step 9:** Now, let's proceed with the insertion of the next element, 60. Considering the existing values in the tree (16, 25, 30, 40), we find that 60 is greater than all of them. Therefore, node 60 will be placed to the right of node 40. As the tree is not empty, the color of node 60 will be Red.
+<img src="images/insert18.png" alt="insert18"/>
 
-Upon observing the tree, we can see that a Red-red conflict arises. The parent node is Red in color, and there is no parent's sibling present in the tree. As a result, we will apply rule 4a. The first rotation to be performed will be a left rotation, as there is an RR relationship between the nodes.
-
-<img src="images/insert18.png" alt="insert18" />
-
-Upon performing the left rotation, node 40 moves upwards, and node 30 moves downwards, as depicted in the figure below:
+We will now insert a node with a value of 40 into the red-black tree. This new node will be inserted as a red node.
 
 <img src="images/insert19.png" alt="insert19"/>
 
-After the rotation, recoloring is carried out on nodes 30 and 40. The color of node 30 changes to Red, while the color of node 40 changes to Black, as illustrated in the figure below.
+We have two red nodes in a row in the red-black tree. Let's identify the nodes involved:
+
+- P (Parent - Upper red) = 50
+- C (Child - Lower red) = 40
+- G (Grandparent) = 30
+- PS (Parent's Sibling) = Null node to the left of 30
+
+Since the parent's sibling (PS) is black, we need to fix this by performing a rotation. The type of rotation required depends on the configuration of G, P, and C. If the path from G to C is straight (both left or both right), we perform a zigzag (single) rotation. If it is angled (left then right or right then left), we need to do a zigzag (double) rotation.
 
 <img src="images/insert20.png" alt="insert20"/>
 
-The tree depicted above adheres to all the properties of a Red-Black tree, making it a valid Red-Black tree. This example has been sourced from javatpoint.com [3].
+In this particular scenario, we must perform a zigzag (double) rotation. Let's start by rotating nodes 40 and 50.
+
+<img src="images/insert21.png" alt="insert21"/>
+
+After the initial zigzag (double) rotation with nodes 40 and 50, we need to perform another rotation, this time involving nodes 30 and 40. During this rotation, we will also swap the colors of nodes 30 and 40. The zigzag rotation is an additional step that ensures the insertion path follows the same direction.
+
+<img src="images/insert22.png" alt="insert22"/>
+
+Once the rotations are completed, we proceed to exchange the colors between the node that has taken over G's spot (40 in this case) and G (30). Consequently, node 40 will become black, and node 30 will become red. This color exchange ensures that the red-black tree properties are maintained after the insertion process.
+
+<img src="images/insert23.png" alt="insert23"/>
+
+Let's insert a new node with a value of 20 into the red-black tree. This node will be inserted as a red node, and we will proceed with the necessary adjustments to maintain the red-black tree properties.
+
+<img src="images/insert24.png" alt="insert24"/>
+
+We have two red nodes in a row in the red-black tree. Let's identify the nodes involved:
+
+- P (Parent - Upper red) = 30
+- C (Child - Lower red) = 20
+- G (Grandparent) = 40
+- PS (Parent's Sibling) = Null node to the left of 50
+
+Since the parent's sibling (PS) is red, we need to perform an operation called color exchange. We exchange colors between G and its two children (P and PS) to satisfy the red-black tree properties.
+
+<img src="images/insert25.png" alt="insert25"/>
+
+Performing the color exchange in this case violates properties of red-black trees, which states that roots must be black. To rectify this, we simply change the color of the root node (G, which is currently 40) to black. This adjustment ensures that all red-black tree properties are upheld without causing any further issues.
+
+<img src="images/insert26.png" alt="insert26"/>
+
+Let's insert a new node with a value of 10 into the red-black tree. This node will be inserted as a red node, and we will proceed with the necessary adjustments to maintain the red-black tree properties.
+
+<img src="images/insert27.png" alt="insert27"/>
+
+We have two red nodes in a row in the red-black tree. Let's identify the nodes involved:
+
+- P (Parent - Upper red) = 20
+- C (Child - Lower red) = 10
+- G (Grandparent) = 30
+- PS (Parent's Sibling) = Null node to the right of 30
+
+Since the parent's sibling (PS) is black (null nodes are considered black in red-black trees), we need to fix this by performing a rotation. The rotation will always be done with G (30) as the root of the rotation (the A in the rotation diagram).
+
+This time, the path from G to P to C is "left" then "left," so we only need to perform a single rotation. After the rotation, we will swap the colors between G (30) and the node that took G's spot. This adjustment ensures that the red-black tree properties are maintained after the insertion process.
+
+<img src="images/insert28.png" alt="insert28"/>
+
+After completing the necessary adjustments and rotations, the final red-black tree structure will look like this:
+
+<img src="images/insert29.png" alt="insert29" width = "500"/>
 
 
 **Deletion in Red-Black tree**  
@@ -409,3 +462,4 @@ By executing this step, we successfully address the double black situation, ensu
 [2] Huja, H. Red-Black Tree. Medium. Retrieved July 15, 2023, from https://hardikahuja99.medium.com/red-black-tree-8cf904034a90  
 [3] JavaTpoint. Red-Black Tree. Retrieved July 15, 2023, from https://www.javatpoint.com/red-black-tree  
 [4] OpenGenus IQ. Time and Space Complexity of Red-Black Tree. Retrieved July 15, 2023, from https://iq.opengenus.org/time-and-space-complexity-of-red-black-tree/  
+[5] Leung, C. Red-Black Trees. In Data Structures and Algorithms: A Comprehensive Guide. Retrieved July 15, 2023, from https://catherine-leung.gitbook.io/data-strutures-and-algorithms/red-black-trees  
