@@ -287,150 +287,54 @@ A Red-Black tree takes O(log n) time for deletion because it is a self-balancing
 
 The deletion process in a Red-Black tree begins with a standard binary search tree deletion. Once the node is removed from the tree, the tree's properties may be violated, specifically the properties related to color balance and black height. To maintain these properties, a set of restructuring operations, including color adjustments and rotations, are performed.
 
-Now, let's explore the process of deleting a specific node from the Red-Black tree. We will be employing the following rules to achieve the deletion from javatpoint.com [3]:
+Now, let's explore the process of deleting a specific node from the Red-Black tree. We will be employing the following steps to achieve the deletion from GeeksforGeeks [6]:
 
-**Step 1:** Initially, we begin the deletion process by applying the Binary Search Tree (BST) rules.  
-**Step 2:**  
-**Case 1:** If the node to be deleted is Red, we can directly remove it from the tree.  
+**1.** To delete a node in the Red-Black Tree, we first perform the standard Binary Search Tree (BST) delete operation. This operation results in the deletion of a node that is either a leaf or has only one child. In the case of an internal node, we copy the successor and then recursively call the delete function for the successor. It is important to note that the successor node is always a leaf node or a node with one child. Let's assume that we want to delete node v, and u represents the child that will replace v. If v is a leaf node, then u is set to NULL (considered as Black in terms of color representation).
 
-To illustrate Case 1, let's consider an example. Let's say we want to delete node 30 from the following tree:  
+**2.** In the simple case where either u or v is red, we mark the replaced child as black. This operation does not affect the black height of the tree. It is worth mentioning that both u and v cannot be red simultaneously, as u is the child of v, and having two consecutive red nodes is not permitted in a Red-Black Tree.
 
-<img src="images/delete1.png" alt="delete1" width="200"/>
+<img src="images/delete1.png" alt="delete1"/>
 
-Initially, with the address of the root node in hand, we will apply the Binary Search Tree (BST) approach to search for the desired node, which is 30 in this case. Following the comparison, we find that 30 is greater than both 10 and 20, indicating that 30 is the right child of node 20. As node 30 is a Red leaf node, we can safely delete it from the tree.
+**3.** When both u and v are Black:  
+**3.1** We color u as "double black." This means that after the standard delete operation in a Red-Black Tree, u takes on the double black color. Our goal now is to convert this double black node back to a single black node, maintaining the Red-Black Tree properties. It is important to mention that if v is a leaf node, then u is set to NULL, and in terms of color representation, NULL is considered to be black. Hence, the deletion of a black leaf node also results in a double black situation.
 
-Now, let's explore the process of deleting an internal node that has only one child. The first step involves replacing the value of the internal node with the value of its child node. Subsequently, we can proceed to delete the child node from the tree.
+<img src="images/delete2.png" alt="delete2"/>
 
-**Let's consider another example where we aim to delete the internal node, node 20.**
 
-<img src="images/delete2.png" alt="delete2" width="200"/>
+**3.2** While the current node u is in a double black state and is not the root, the following steps are taken. Let the sibling of the node u be denoted as s.
 
-In the scenario where we need to remove an internal node, such as node 20, we cannot directly delete it. Instead, we can replace the value of node 20 with another value. Since node 20 is situated to the right of the root node and possesses only one child, which is node 30, we will update the value of node 20 to 30 while keeping its color unchanged (Black). Subsequently, we can safely delete node 20 (which now acts as a leaf node) from the tree.
+(a) **If the sibling s is black and at least one of its children is red**, a rotation is performed on s. Let the red child of s be denoted as r. This case can be further divided into four subcases, based on the positions of s and r.
 
-<img src="images/delete3.png" alt="delete3" width="200"/>
+   i. Left-Left Case: In this scenario, s is the left child of its parent, and r is the left child of s, or both children of s are red. This subcase can be visualized as a mirror image of the right-right case.
 
-<img src="images/delete4.png" alt="delete4" width="200"/>
+   ii. Left-Right Case: Here, s is the left child of its parent, and r is the right child of s. This subcase can be envisioned as a mirror image of the right-left case.
 
-When we encounter the scenario of deleting an internal node with two child nodes, we must choose between two approaches for replacing the value of the internal node (either left subtree or right subtree):
+   iii. Right-Right Case: In this situation, s is the right child of its parent, and r is the right child of s, or both children of s are red.
 
-1. **Inorder predecessor**: We will replace the value with the largest value present in the left subtree.
-2. **Inorder successor**: We will replace the value with the smallest value present in the right subtree.
+   <img src="images/delete3.png" alt="delete3"/>
+   
+   iv. Right-Left Case: In this scenario, the sibling s is the right child of its parent, and r is the left child of s.
 
-Let’s say we want to remove the node with the value 30 from the following tree:  
+   <img src="images/delete4.png" alt="delete4"/>
 
-<img src="images/delete5.png" alt="delete5" width="250"/>  
+(b) If the sibling s is black and both of its children are black, a recoloring is performed, and the process is recursively applied to the parent node if the parent is black.
 
-Node 30 is located to the right of the root node. In this situation, we will use the inorder successor method. The smallest value in the right subtree is 38, so we will replace the value of 30 with 38 while keeping the node itself red. After replacing the value, we will remove the leaf node, which is 30, from the tree. Since node 30 is a red-colored leaf node, we can simply delete it without having to perform any rotations or recoloring.  
+   <img src="images/delete5.png" alt="delete5"/>
 
-<img src="images/delete6.png" alt="delete6" width="250"/>  
+   
+   In this case, if the parent was red, there would be no need to recur for the parent; instead, we can simply change its color to black, as combining red and double black results in a single black node.
 
-**Case 2:** In the event that the root node is also double black, we can easily remove the double black and change it to a single black node.
+(c) If the sibling s is red, a rotation is performed to move the old sibling up, followed by recoloring the old sibling and the parent. As a result of this operation, the new sibling becomes black. This transformation mainly converts the tree to a situation with a black sibling (achieved through rotation) and then leads to either case (a) or case (b). This case can be further divided into two subcases:
 
-**Case 3:** If the sibling of the double black node is black and both of its children are also black:
-   - Remove the double black node
-   - Add its color to the parent(P) node. 
+   i. Left Case: When s is the left child of its parent, a right rotation is applied to the parent node p.
 
-   1. If the parent node is red, it will become black. 
-   2. If the parent node is black, it will become double black. 
-   - The sibling of the double black node will change to red. 
-   - If a double black situation still arises, we can apply other cases to resolve it.
+   ii. Right Case: If s is the right child of its parent, a left rotation is performed on the parent node p.
 
-To better understand this case, let’s look at an example. Imagine we want to remove the node with the value 15 from the below tree:  
+   <img src="images/delete6.png" alt="delete6"/>
 
-<img src="images/delete7.png" alt="delete7" width="250"/>  
+   
+**3.3** If u is the root, we simply make it a single black node, reducing the black height of the complete tree by 1.
 
-We cannot just remove node 15 from the tree since it is colored black. Node 15 has two nil children, so we replace the value of 15 with a nil value. Since both node 15 and the nil node are black, the node becomes double black after the replacement, as shown in the figure below:  
-
-<img src="images/delete8.png" alt="delete8" width="250"/>  
-
-Upon examining the tree above, we can discern that the sibling of the double black node is black, and its children are nil, which are also black. Since the sibling and its children are all black, it is unable to transfer its black color to any of them. The parent node of the double black node is red, so the double black node imparts its black color to its parent. As a result, the color of node 20 changes to black, while the nil node becomes a single black, as depicted in the figure below:
-
-<img src="images/delete9.png" alt="delete9" width="250"/>  
-
-After adding its color to the parent node, the sibling of the double black node, which is node 30, changes to red, as illustrated in the figure below. 
-
-<img src="images/delete10.png" alt="delete10" width="250"/>  
-
-Thus, we can see that the issue of the double black node no longer exists and that it remains a Red-Black tree by examining the above tree.
-
-**Case 4:** Handling the situation when the sibling of the double black node is Red.
-
-To resolve this scenario, the following steps should be taken:
-
-1. Exchange the colors of the parent node and its sibling.
-2. Perform a rotation on the parent node in the direction of the double black node.
-3. Reapply the cases to ensure the Red-Black tree properties are maintained.
-
-For better comprehension, let's illustrate this case with a practical example:
-
-Let's consider a Red-Black tree and the node 15 that we want to delete.
-
-<img src="images/delete11.png" alt="delete11" />  
-
-In the beginning, the value 15 is substituted with a nil value, resulting in the node becoming double black. Given that the sibling of the double black node is Red, the color of node 20 is modified to Red, and the color of node 30 is altered to Black.
-
-After the color swapping process, the rotation to address the double black situation will take place. Node 30 will ascend, while node 20 will descend, as illustrated in the following diagram.
-
-<img src="images/delete12.png" alt="delete12" />  
-
-In the above tree, the double black situation remains unresolved. It meets the criteria of case 3, where the double black's sibling is black, and both its children are black. To address this situation, we first remove the double black status from the node and assign the black color to its parent node. Consequently, the color of the double black's sibling, i.e., node 25, changes to Red, as illustrated in the following figure.
-
-<img src="images/delete13.png" alt="delete13" />  
-
-In the above tree diagram, it is evident that the double black scenario has been effectively resolved. Furthermore, the tree satisfies all the essential properties of a Red-Black tree.
-
-**Case 5:** When the sibling of the double black node is black, and the sibling's child, which is far from the double black node, is black, but the nearer child to the double black node is red.
-
-1. Exchange the colors of the double black's sibling and the sibling child that is closer to the double black node.
-2. Rotate the sibling node in the opposite direction of the double black node.
-3. Proceed to handle the scenario as per case 6.
-
-Suppose we intend to delete the node 1 in the following tree.
-
-<img src="images/delete14.png" alt="delete14" />  
-
-Initially, we substitute the value 1 with a nil value, resulting in the node becoming double black, as both the nodes, i.e., 1 and nil, are black. This situation aligns with case 3, which states that if the double black's sibling is black and both its children are black, certain actions are required.
-
-Firstly, we eliminate the double black status from the nil node. Since the parent of the double black node is black, when we add the black color to the parent node, it becomes double black. After this color addition, the double black's sibling changes its color to Red, as depicted below.
-
-<img src="images/delete15.png" alt="delete15" />  
-
-As seen in the previous illustration, the double black issue persists in the tree. Thus, we need to reapply the relevant cases to resolve it. In this situation, we will apply case 5 since node 30 is the sibling of node 5 and is black in color. Additionally, the child of node 30 that is farther from node 5 is black, and the nearer child to node 5 is Red. 
-
-To handle case 5, we will first swap the colors of node 30 and node 25, resulting in the color of node 30 changing to Red, and the color of node 25 changing to Black, as depicted below.
-
-<img src="images/delete16.png" alt="delete16" />  
-
-After completing the color swapping between the nodes, the next step is to perform a rotation of the sibling in the opposite direction of the double black node. In this rotation, node 30 will descend, while node 25 will ascend, as illustrated below.  
-
-<img src="images/delete17.png" alt="delete17" />  
-
-In the above provided tree, it is evident that the double black situation remains unresolved. Therefore, we must proceed with case 6. Before diving into case 6, let's first understand what it entails.
-
-**Case 6:** When the sibling of the double black node is black, and the far child is Red:
-
-1. Swap the colors of the Parent and its sibling node.
-2. Rotate the parent node towards the direction of the double black node.
-3. Remove the Double black node.
-4. Change the Red color to black.
-
-Let's proceed with applying case 6 to resolve the double black situation in the provided example.
-
-In this case, the double black node is node 5, and its sibling is node 25, which is black in color. The far child of the double black node is node 30, and it is Red in color, as illustrated in the figure below: 
-
-<img src="images/delete18.png" alt="delete18" /> 
-
-Initially, we attempt to swap the colors of the Parent node and its sibling. In this particular case, the parent of node 5 is node 10, and the sibling node is node 25. Since the colors of both nodes are black, no swapping will occur in this step.
-
-Next, we proceed to the second step, which involves rotating the parent in the direction of the double black node. After performing the rotation, node 25 will ascend, while node 10 will descend. The resulting tree structure will be as illustrated in the figure below:
-
-<img src="images/delete19.png" alt="delete19" /> 
-
-In the subsequent step, we eliminate the double black status from node 5, and node 5 imparts its black color to the far child, which is node 30. Consequently, the color of node 30 changes to black, as depicted in the figure below:
-
-<img src="images/delete20.png" alt="delete20" /> 
-
-By executing this step, we successfully address the double black situation, ensuring the Red-Black tree properties are preserved.
 
 
 ## Empirical Analysis
@@ -439,10 +343,64 @@ By executing this step, we successfully address the double black situation, ensu
 
 
 ## Application
-- What is the algorithm/datastructure used for?
-- Provide specific examples
-- Why is it useful / used in that field area?
-- Make sure to provide sources for your information.
+
+Now let's explore various fields and areas where red-black trees are commonly used and why they are preferred for those specific applications:
+
+1. **Dynamic Set Operations:**
+   One of the primary applications of red-black trees is to implement dynamic set operations[7], such as searching, insertion, and deletion of elements while maintaining a balanced data structure. The self-balancing property of red-black trees ensures that these operations take O(log n) time, making them efficient for dynamic data sets with frequent updates.
+
+   **Example:** A spell-checker application can use a red-black tree to store a dictionary of words, allowing quick word lookups, insertions of new words, and removal of incorrect words while ensuring the dictionary remains sorted for efficient search operations.
+
+2. **Compiler and Symbol Table:**
+   Red-black trees are widely used in compilers and interpreters to build and maintain symbol tables efficiently[8]. A symbol table is a data structure that stores information about variables, functions, and other symbols used in a program. The balanced nature of red-black trees makes them ideal for implementing symbol tables, as they offer efficient insertion and retrieval of symbols.
+
+   **Example:** In a programming language compiler, red-black trees can be used to store the symbols encountered during the parsing phase, allowing the compiler to quickly look up and update symbol information during later stages of compilation.
+
+3. **Operating Systems:**
+   Red-black trees find applications in various operating system components, such as process scheduling, file system management, and memory management[9]. They are used to organize and maintain data structures that require fast search and insertion operations while ensuring balanced resource allocation.
+
+   **Example:** In process scheduling, a red-black tree can be utilized to maintain a ready queue of processes, where the nodes represent processes with their respective priorities. The scheduler can quickly find the process with the highest priority, allowing for efficient context switching.
+
+4. **Interval Trees:**
+   An interval tree is a specialized form of a red-black tree that stores intervals of values and is used in applications that involve searching for overlapping or intersecting intervals efficiently[10]. Interval trees allow efficient range queries, insertion, and deletion operations.
+
+   **Example:** In a calendar application, an interval tree can be used to store and manage events. The intervals represent the start and end times of events, allowing the application to find overlapping events or retrieve events within a specific time range quickly.
+
+5. **Database Indexing:**
+   In databases, red-black trees are often used to implement balanced search trees for indexing[11]. Indexes speed up query processing by allowing rapid data retrieval based on specific attributes or fields, and red-black trees efficiently handle insertions and deletions to maintain the index's balance.
+
+   **Example:** In a relational database management system, a red-black tree index can be used to accelerate search operations on a specific column, reducing the time needed for retrieving relevant rows from large tables.
+
+6. **Network Routing Algorithms:**
+   Red-black trees can be applied in network routing algorithms, where they are used to organize and maintain routing information efficiently[12]. The balanced nature of red-black trees ensures that routing tables can be updated and queried quickly.
+
+   **Example:** In computer networks, red-black trees can be used in link-state routing protocols like OSPF (Open Shortest Path First) to maintain and manage the network's topology information. The trees can store and update routing table entries, which are essential for packet forwarding decisions.
+
+7. **Counting and Ranking Operations:**
+   Red-black trees can be augmented to support counting and ranking operations on a dynamic set of elements[13]. Augmentation involves adding extra information to each node, enabling efficient counting or ranking queries.
+
+   **Example:** An e-commerce platform can use an augmented red-black tree to maintain the list of products sorted by their popularity or sales count. The tree's augmentation allows the platform to quickly determine the most popular products or provide ranked product lists to users.
+
+   Let's now delve into the benefits and drawbacks of the red-black tree data structure.
+
+   **Advantages of Red-Black Tree:**  
+   1. Balancing: Red-black trees maintain a balanced parallel tree, which ensures efficient operations and prevents the tree from becoming skewed.
+   2. Efficient Search: The time complexity for search operations is O(log n), making it fast and suitable for large datasets.
+   3. Low Constants: Red-black trees have relatively low constants in a wide range of scenarios, leading to efficient performance in practical use cases.
+   4. Dynamic Nature: They support dynamic operations like insertion and deletion efficiently while maintaining the balanced property.
+   5. Ease of Implementation: Red-black trees are relatively easy to understand and implement, making them accessible for developers.
+   6. Flexibility: Suitable for various applications, including database indexing, memory management, and network routing. They handle ordered and unordered data effectively, making them versatile for different data structures.
+
+   **Disadvantages of Red-Black Tree:**  
+   1. Complexity: Managing edge cases and implementing a red-black tree from scratch can be complex, and using standard library implementations is often preferred.
+   2. Performance: For scenarios where the tree is built once and only read operations are performed, AVL trees may offer better performance.
+   3. Not Ideal for Disk Storage: B-trees are preferred for storing large amounts of data on disks due to their ability to limit disk operations.
+   4. Inefficient Concurrent Access: Locking red-black trees perform poorly with simultaneous access compared to locking skip lists, which offer better concurrent performance.
+   5. Scalability: As the number of nodes in the tree increases, managing a red-black tree can become challenging and impact performance.
+   6. Slow Insertions: Insertions in red-black trees can be relatively slow compared to other data structures like AVL trees.
+   7. Not Suitable for Large Datasets: Red-black trees may not be the best choice for handling large datasets efficiently.
+   8. Overhead: The self-balancing nature of red-black trees adds overhead to insertion and deletion operations, making them slightly slower compared to non-self-balancing structures.
+   9. Worst-case Performance: While red-black trees have good average-case performance, their worst-case performance can be slow compared to other data structures.
 
 
 ## Implementation
@@ -451,6 +409,161 @@ By executing this step, we successfully address the double black situation, ensu
 - What were the challenges you faced?
 - Provide key points of the algorithm/datastructure implementation, discuss the code.
 - If you found code in another language, and then implemented in your own language that is fine - but make sure to document that.
+
+I will implement the Red-Black Tree by using Python. First of all, let's explore the pseudocode for the implementation of Red-Black trees.
+
+The first operation is insertion, which involves adding a new node to a tree. This is accomplished using the insert method with the following algorithm based on CLRS[14] pseudocode for RB-Insert:
+
+```
+   RB-Insert(T,z)
+      y = nil[T]
+      x = root[T]
+      while x != nil[T]
+            y = x
+            if key[z] < key[x] then
+               x = left[x]
+            else
+               x = right[x]
+      p[z] = y
+      if y = nil[T]
+            root[T] = z
+      else
+         if key[z] < key[y] then
+            left[y] = z
+         else
+            right[y] = z
+      left[z] = nil[T]
+      right[z] = nil[T]
+      color[z] = RED
+      RB-Insert-fixup(T,z)
+
+   Parameters:
+   value - is an integer to be inserted
+```
+
+Next, we have the leftRotate() operation, which is responsible for performing a single left rotation. Typically, this method would be marked as private since it serves as a helper function. It follows the algorithm CLRS [14] as described below:
+
+```
+ pseudocode for left rotations
+ pre: right[x] != nil[T]
+ pre: root's parent is nill[T]
+
+ Left-Rotate(T,x)
+    y = right[x]
+    right[x] = left[y]
+    p[left[y]] = x
+    p[y] = p[x]
+
+
+    if p[x] == nil[T] then root[T] = y
+    else
+       if x == left[p[x]] then left[p[x]] = y
+       else
+          right[p[x]] = y
+    left[y] = x
+    p[x] = y
+```
+
+Following the left rotation operation, we also have the rightRotate() operation, responsible for performing a single right rotation. Like the previous method, this one is typically marked as private since it serves as a helper function. The algorithm for the rightRotate() method, based on CLRS [14], is as follows:
+
+```
+ pseudocode for right rotation
+ pre: left[x] != nil[T]
+ pre: root's parent is nill[T]
+ Right-Rotate(T,x)
+    y = left[x]           // y now points to node to left of x
+    left[x] = right[y]    // y's right subtree becomes x's left subtree
+    p[right[y]] = x       // right subtree of y gets a new parent
+    p[y] = p[x]           // y's parent is now x's parent
+
+    // if x is at root then y becomes new root
+    if p[x] == nil[T] then root[T] = y
+    else
+        // if x is a left child then adjust x's parent's left child or...
+
+         if x == left[p[x]] then left[p[x]] = y
+         else
+         // adjust x's parent's right child
+            right[p[x]] = y
+    // the right child of y is now x
+    right[y] = x
+    // the parent of x is now y
+    p[x] = y
+ ```
+
+Next, we will have the RBInsertFixup method. It is responsible for ensuring that the Red-Black Properties of the tree are preserved after performing an insertion. Typically, this method would be marked as private since it serves as a helper function. I will follow Andrew's pseudocode [15] which will provide two pseudocode descriptions: the first one is more for understanding, while the second one is closer to an implementation.
+
+```
+  RB-Insert-fixup(T,z) {
+  while(z's parent is Red) {
+      set y to be z's uncle
+      if uncle y is Red {
+               color parent and uncle black
+               color grandparent red
+               set z to grandparent
+      }
+      else {  // the uncle is black
+              if (zig zag) { // make it a zig zig
+                             set z to parent
+                             rotate to zig zig
+                           }
+              // rotate the zig zig and finish
+              color parent of z black
+              color grandparent of z red
+              rotate grand parent of z
+           }
+   } // end while
+  color root black
+ }
+
+  Low-level Pseudo-code for RB-Insert-fixup
+  RB-Insert-fixup(T,z)
+  while color[p[z]] = RED {
+    if p[z] == left[p[p[z]]] {
+         y = right[p[p[z]]]
+         if color[y] = RED {
+             color[p[z]] = BLACK
+             color[y] = BLACK
+             color[p[p[z]]] = RED
+             z = p[p[z]]
+         }
+         else {
+             if z = right[p[z]] {
+                  z = p[z]
+                  LEFT-Rotate(T,z)
+             }
+             color[p[z]] = BLACK
+             color[p[p[z]]] = RED
+             RIGHT-Rotate(T,p[p[z]])
+         }
+    }
+    else {
+         y = left[p[p[z]]]
+         if color[y] = RED {
+             color[p[z]] = BLACK
+             color[y] = BLACK
+             color[p[p[z]]] = RED
+             z = p[p[z]]
+         }
+         else
+             {
+             if z = left[p[z]] {
+                  z = p[z]
+                  RIGHT-Rotate(T,z)
+             }
+             color[p[z]] = BLACK
+             color[p[p[z]]] = RED
+             LEFT-Rotate(T,p[p[z]])
+         }
+    }
+    color[root[T]] = BLACK
+  }
+  
+Parameters:
+z - is the new node
+```
+
+
 
 
 ## Summary
@@ -463,3 +576,13 @@ By executing this step, we successfully address the double black situation, ensu
 [3] JavaTpoint. Red-Black Tree. Retrieved July 15, 2023, from https://www.javatpoint.com/red-black-tree  
 [4] OpenGenus IQ. Time and Space Complexity of Red-Black Tree. Retrieved July 15, 2023, from https://iq.opengenus.org/time-and-space-complexity-of-red-black-tree/  
 [5] Leung, C. Red-Black Trees. In Data Structures and Algorithms: A Comprehensive Guide. Retrieved July 15, 2023, from https://catherine-leung.gitbook.io/data-strutures-and-algorithms/red-black-trees  
+[6] GeeksforGeeks. Deletion in Red-Black Tree. GeeksforGeeks. Retrieved July 15, 2023, from https://www.geeksforgeeks.org/deletion-in-red-black-tree/  
+[7] Li, C. (2021, September 15). Algorithms and Data Structures - Chapter 14. University of Science and Technology of China. http://staff.ustc.edu.cn/~csli/graduate/algorithms/book6/chap14.htm  
+[8] Sanjiv, K. Search Algorithms. Retrieved July 15, 2023, from http://www.cs.umsl.edu/~sanjiv/classes/cs3130/lectures/search1.pdf  
+[9] Coding Ninjas. Introduction to Red-Black Trees. Coding Ninjas Studio. Retrieved July 15, 2023, from https://www.codingninjas.com/studio/library/introduction-to-red-black-trees  
+[10] Borzoo Esmailloo. (2020, May 3). Augmenting Red-Black Trees. Medium. Retrieved July 15, 2023, from https://medium.com/swlh/augmenting-red-black-trees-d9b4cd7635f8  
+[11] Baeldung. Red-Black Trees and Their Applications. Baeldung. Retrieved July 15, 2023, from https://www.baeldung.com/cs/red-black-trees-applications  
+[12] GeeksforGeeks. Applications, Advantages, and Disadvantages of Red-Black Tree. GeeksforGeeks. Retrieved July 15, 2023, from https://www.geeksforgeeks.org/applications-advantages-and-disadvantages-of-red-black-tree/  
+[13] Byorgey, B. Counting Inversions via Rank Queries. Brent's Blog. Retrieved July 15, 2023, from https://byorgey.wordpress.com/2019/12/18/counting-inversions-via-rank-queries/  
+[14] Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein. 2009. Introduction to Algorithms, Third Edition (3rd. ed.). The MIT Press.  
+[15] Andrew Carnegie Mellon University. RedBlackTree. JavaDocs. Carnegie Mellon University. https://www.andrew.cmu.edu/user/mm6/95-771/examples/RedBlackTreeProject/dist/javadoc/redblacktreeproject/RedBlackTree.html#inOrderTraversal(redblacktreeproject.RedBlackNode)  
