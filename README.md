@@ -408,12 +408,22 @@ Now let's explore various fields and areas where red-black trees are commonly us
 - What libraries did you use?
 - What were the challenges you faced?
 - Provide key points of the algorithm/datastructure implementation, discuss the code.
-- If you found code in another language, and then implemented in your own language that is fine - but make sure to document that.
 
-I will implement the Red-Black Tree by using Python. First of all, let's explore the pseudocode for the implementation of Red-Black trees.
+**You can run `RBTreeImp.py` for the Implementation of the Red-Black Tree. You can insert nodes, delete nodes and print the Red-Black Tree in the `RBTreeImp.py` by calling `bst.insert()`, `bst.delete_node()` and `bst.print_tree()` in the main function. My code is inspired from AskPython.com [17].**
+
+I use Python for the implementation of a Red-Black Tree because Python offers several advantages, making it an excellent choice for this purpose. Python is a high-level, interpreted, and dynamically-typed programming language known for its simplicity, ease of use, and rich standard library. These characteristics make Python an attractive choice for developing data structures like the Red-Black Tree. 
+
+One of Python's key strengths is its expressive syntax, which allows developers to write clear and concise code. When implementing complex data structures like the Red-Black Tree, code readability is of paramount importance, especially considering the intricacies involved in maintaining tree balance and color properties. Python's clean and easily understandable syntax aids in implementing the Red-Black Tree algorithms in a more natural and intuitive way. This results in reduced development time, better maintainability, and improved collaboration among team members.
+
+Furthermore, Python's dynamic typing enables flexibility during the implementation process. Red-Black Trees often involve complex data manipulations, such as pointer management and recursive operations. Python's dynamic typing allows developers to focus more on the algorithmic aspects of the Red-Black Tree rather than being encumbered by low-level data type declarations. This enhanced flexibility allows for more efficient experimentation and easier adaptation of the code to different use cases.
+
+Moreover, Python's popularity and large community support ensure the availability of numerous libraries and packages that can enhance the implementation of the Red-Black Tree. For example, developers can use third-party libraries for visualization and debugging, enabling them to gain valuable insights into the tree's structure and properties during development and testing. Additionally, the vast Python community provides ample learning resources, tutorials, and documentation, which can assist graduate students and developers in comprehending the intricacies of Red-Black Trees and improving their implementation skills.
+
+I only use the 'import sys' library. This is a built-in Python module that provides access to some variables used or maintained by the interpreter and to functions that interact with the interpreter. In my code, it is used to access sys.stdout.write() function, which allows printing output to the console without adding a newline character.
+
+Let's explore the pseudocode for the implementation of Red-Black trees.
 
 The first operation is insertion, which involves adding a new node to a tree. This is accomplished using the insert method with the following algorithm based on CLRS[14] pseudocode for RB-Insert:
-
 ```
    RB-Insert(T,z)
       y = nil[T]
@@ -440,56 +450,51 @@ The first operation is insertion, which involves adding a new node to a tree. Th
    Parameters:
    value - is an integer to be inserted
 ```
-
-Next, we have the leftRotate() operation, which is responsible for performing a single left rotation. Typically, this method would be marked as private since it serves as a helper function. It follows the algorithm CLRS [14] as described below:
-
+Here is the insertion function in Python.  
 ```
- pseudocode for left rotations
- pre: right[x] != nil[T]
- pre: root's parent is nill[T]
+  def insert(self, key):
+        node = Node(key)
+        node.parent = None
+        node.item = key
+        node.left = self.TNULL
+        node.right = self.TNULL
+        node.color = 1
+        y = None
+        x = self.root
+        while x != self.TNULL:
+            y = x
+            if node.item < x.item:
+                x = x.left
+            else:
+                x = x.right
+        node.parent = y
+        if y == None:
+            self.root = node
+        elif node.item < y.item:
+            y.left = node
+        else:
+            y.right = node
+        if node.parent == None:
+            node.color = 0
+            return
 
- Left-Rotate(T,x)
-    y = right[x]
-    right[x] = left[y]
-    p[left[y]] = x
-    p[y] = p[x]
+        if node.parent.parent == None:
+            return
 
-
-    if p[x] == nil[T] then root[T] = y
-    else
-       if x == left[p[x]] then left[p[x]] = y
-       else
-          right[p[x]] = y
-    left[y] = x
-    p[x] = y
+        self.fix_insert(node)
 ```
-
-Following the left rotation operation, we also have the rightRotate() operation, responsible for performing a single right rotation. Like the previous method, this one is typically marked as private since it serves as a helper function. The algorithm for the rightRotate() method, based on CLRS [14], is as follows:
-
-```
- pseudocode for right rotation
- pre: left[x] != nil[T]
- pre: root's parent is nill[T]
- Right-Rotate(T,x)
-    y = left[x]           // y now points to node to left of x
-    left[x] = right[y]    // y's right subtree becomes x's left subtree
-    p[right[y]] = x       // right subtree of y gets a new parent
-    p[y] = p[x]           // y's parent is now x's parent
-
-    // if x is at root then y becomes new root
-    if p[x] == nil[T] then root[T] = y
-    else
-        // if x is a left child then adjust x's parent's left child or...
-
-         if x == left[p[x]] then left[p[x]] = y
-         else
-         // adjust x's parent's right child
-            right[p[x]] = y
-    // the right child of y is now x
-    right[y] = x
-    // the parent of x is now y
-    p[x] = y
- ```
+Let's explain the above code step by step: 
+1. The code starts with defining a method named `insert`, which takes a single parameter `key`, representing the value to be inserted into the red-black tree.
+2. A new node is created using the `Node` class, and the `key` value is assigned to the `item` attribute of the node. The `color` attribute is set to 1 (red). `self.TNULL` likely represents a sentinel node (a special node representing NULL/empty leaves) used in the red-black tree implementation.
+3. The variables `y` and `x` are initialized to `None` and `self.root`, respectively. `y` will be used to keep track of the parent of the newly inserted node, and `x` is used to traverse the tree to find the correct position for the new node.
+4. A while loop is used to find the correct position in the red-black tree for the new node. It compares the value of the new node with the values of the existing nodes in the tree and decides whether to move left or right based on the comparison. The loop terminates when `x` becomes the sentinel node (`self.TNULL`) indicating that the correct position for insertion has been found.
+5. After finding the correct position, the parent of the new node is set to `y`.
+6. If `y` is `None`, it means the tree was empty, and the new node becomes the root of the tree.
+7. Otherwise, if the value of the new node is less than the value of `y`, it means the new node should be placed as the left child of `y`, and it is assigned as such.
+8. Otherwise, the new node is placed as the right child of `y`.
+9. If the parent of the new node is `None`, it means the new node is the root of the tree and is colored black (`node.color = 0`), and the insertion process is complete. A black root is one of the properties of a red-black tree.
+10. If the grandparent of the new node (`node.parent.parent`) is `None`, it means the new node's parent is the root of the tree. Since the parent of the new node is already black (set in the previous step), all the properties of the red-black tree are satisfied, and the insertion process is complete.
+11. If neither of the above conditions is met, it means the new node has a grandparent and requires further adjustments to maintain the red-black tree properties. The method `fix_insert(node)` is then called to handle the fix-up operations necessary to maintain the properties of a red-black tree.
 
 Next, we will have the RBInsertFixup method. It is responsible for ensuring that the Red-Black Properties of the tree are preserved after performing an insertion. Typically, this method would be marked as private since it serves as a helper function. I will follow Andrew's pseudocode [15] which will provide two pseudocode descriptions: the first one is more for understanding, while the second one is closer to an implementation.
 
@@ -563,6 +568,434 @@ Parameters:
 z - is the new node
 ```
 
+Here is the RBInsertFixup function in Python.  
+```
+    def fix_insert(self, k):
+        while k.parent.color == 1:
+            if k.parent == k.parent.parent.right:
+                u = k.parent.parent.left
+                if u.color == 1:
+                    u.color = 0
+                    k.parent.color = 0
+                    k.parent.parent.color = 1
+                    k = k.parent.parent
+                else:
+                    if k == k.parent.left:
+                        k = k.parent
+                        self.right_rotate(k)
+                    k.parent.color = 0
+                    k.parent.parent.color = 1
+                    self.left_rotate(k.parent.parent)
+            else:
+                u = k.parent.parent.right
+
+                if u.color == 1:
+                    u.color = 0
+                    k.parent.color = 0
+                    k.parent.parent.color = 1
+                    k = k.parent.parent
+                else:
+                    if k == k.parent.right:
+                        k = k.parent
+                        self.left_rotate(k)
+                    k.parent.color = 0
+                    k.parent.parent.color = 1
+                    self.right_rotate(k.parent.parent)
+            if k == self.root:
+                break
+        self.root.color = 0
+```
+Let's explain the above code step by step:  
+1. The method `fix_insert` takes a single parameter `k`, which represents the newly inserted node that may cause violations in the red-black tree properties.
+2. The method uses a `while` loop that continues as long as the parent of node `k` is red (color == 1). This indicates a violation of the red-black tree property that no red node can have a red parent.
+3. The code checks whether the parent of node `k` is the right child of its grandparent. This check is to determine whether `k`'s parent is a left child or a right child in its grandparent's subtree.
+4. If `k`'s parent is a right child, the code assigns `u` to be the left sibling of `k`'s parent (i.e., `k`'s uncle).
+5. If the uncle `u` is red (color == 1), the code performs a series of recoloring operations. The recoloring aims to "push down" the black color to the grandparent and make the parent and uncle black, while the grandparent becomes red. This recoloring allows the fix-up process to move up the tree towards the root to check for further violations.
+6. After recoloring, the `k` pointer moves up the tree to the grandparent, as it has now become red due to the recoloring of its child nodes. The loop continues to check if the parent of `k` is red and if the loop should proceed.
+7. If the uncle `u` is black (color == 0), the code performs rotations to balance the tree and satisfy the red-black tree properties. The specific rotation depends on the position of `k` and its parent in the grandparent's subtree.
+8. If `k` is the left child of its parent and its parent is the right child of the grandparent, a right rotation is performed on the parent to "flip" the subtree and make it a left-left case.
+9. After the rotation, the color of the parent and grandparent is adjusted to maintain the properties of the red-black tree.
+10. If `k` is the right child of its parent and its parent is the left child of the grandparent, a left rotation is performed on the parent to "flip" the subtree and make it a right-right case.
+11. After the rotation, the color of the parent and grandparent is adjusted as before.
+12. The loop continues, and the process repeats until the parent of `k` is no longer red or until the root is reached.
+13. Finally, the color of the root node is set to black (color == 0), as one of the properties of a red-black tree is that the root must always be black.
+Overall, this `fix_insert` method ensures that after inserting a new node into a red-black tree, the tree remains balanced and satisfies all the properties of a red-black tree.
+
+
+
+
+The second operation is deletion. Firstly, we need the `RB-TRANSPLANT` function to handle the replacement of a subtree rooted at node u with a subtree rooted at node v. This function is essential during node deletion in a red-black tree.
+
+The purpose of the RB-TRANSPLANT function is to maintain the integrity of the tree structure and the parent-child relationships after removing a node during the deletion process. The function helps ensure that the red-black tree properties are preserved after a node is removed. Here is the pseudocode for the `RB-TRANSPLANT` function.
+```
+RB-TRANSPLANT(T,u,v)
+
+if u.p == T.nil
+	T.root = v
+else if u == u.p.left
+	u.p.left = v
+else
+	u.p.right = v
+v.p = u.p
+```
+Here is the `RB-TRANSPLANT` function in Python.  
+```
+ def __rb_transplant(self, u, v):
+        if u.parent == None:
+            self.root = v
+        elif u == u.parent.left:
+            u.parent.left = v
+        else:
+            u.parent.right = v
+        v.parent = u.parent
+```
+
+Let's go through the code step by step to understand the `__rb_transplant` function:
+
+1. The function takes two parameters: `u` (the node to be replaced) and `v` (the node that will replace `u` in the tree).
+2. The function first checks if `u.parent` is `None`. If it is, it means that `u` is the root of the entire tree.
+3. If `u` is the root, the function directly sets the root of the entire tree to be `v`. This operation effectively replaces the entire tree with the subtree rooted at `v`.
+4. If `u` is not the root, the function continues to check if `u` is the left child or the right child of its parent.
+5. If `u` is the left child of its parent (`u == u.parent.left`), the function updates the left child reference of the parent to point to `v`. This operation effectively removes `u` from its current position in the tree and replaces it with the subtree rooted at `v`.
+6. If `u` is the right child of its parent, the function updates the right child reference of the parent to point to `v`. This operation effectively removes `u` from its current position in the tree and replaces it with the subtree rooted at `v`.
+7. Finally, the function updates the parent reference of `v` to be the parent of `u`. This step ensures that the grandparent of the subtree rooted at `v` is properly adjusted to maintain the correct parent-child relationship.
+
+After executing this function, the subtree rooted at node `u` is replaced by the subtree rooted at node `v`, and the parent-child relationships in the tree are correctly updated to maintain the structure and properties of the red-black tree. The `__rb_transplant` function plays a critical role in maintaining the integrity of the tree during node deletion operations and helps ensure that the red-black tree properties are preserved.
+
+Then, we need to have the RB-DELETE(T, z) function to delete nodes which is similar to the deletion process in a normal Binary Search Tree (BST). The core deletion process in the below pseudocode is based on the presence and absence of left and right children of the node to be deleted, z.
+```
+RB-DELETE(T, z)
+  y = z
+  y_orignal_color = y.color
+  if z.left == T.NIL //no children or only right
+      x = z.right
+      RB-TRANSPLANT(T, z, z.right)
+  else if z.right == T.NIL // only left child
+      x = z.left
+      RB-TRANSPLANT(T, z, z.left)
+  else // both children
+      y = MINIMUM(z.right)
+      y_orignal_color = y.color
+      x = y.right
+      if y.parent == z // y is direct child of z
+          x.parent = y
+      else
+          RB-TRANSPLANT(T, y, y.right)
+          y.right = z.right
+          y.right.parent = y
+      RB-TRANSPLANT(T, z, y)
+      y.left = z.left
+      y.left.parent = y
+      y.color = z.color
+  if y_orignal_color == black
+```
+
+Here is the delete function in Python. 
+
+```
+ def delete_node_helper(self, node, key):
+        z = self.TNULL
+        while node != self.TNULL:
+            if node.item == key:
+                z = node
+
+            if node.item <= key:
+                node = node.right
+            else:
+                node = node.left
+
+        if z == self.TNULL:
+            print("Cannot find key in the tree")
+            return
+
+        y = z
+        y_original_color = y.color
+        if z.left == self.TNULL:
+            x = z.right
+            self.__rb_transplant(z, z.right)
+        elif (z.right == self.TNULL):
+            x = z.left
+            self.__rb_transplant(z, z.left)
+        else:
+            y = self.minimum(z.right)
+            y_original_color = y.color
+            x = y.right
+            if y.parent == z:
+                x.parent = y
+            else:
+                self.__rb_transplant(y, y.right)
+                y.right = z.right
+                y.right.parent = y
+
+            self.__rb_transplant(z, y)
+            y.left = z.left
+            y.left.parent = y
+            y.color = z.color
+        if y_original_color == 0:
+            self.delete_fix(x)
+```
+
+Let's explain the above code step by step:  
+
+1. The method takes two parameters: `node`, representing the current node being examined during the deletion process, and `key`, the key value of the node that needs to be deleted.
+2. A sentinel node `z` is initialized to `self.TNULL`, which is likely a special node representing NULL or empty leaves in the red-black tree.
+3. A while loop is used to search for the node with the specified key in the tree starting from the given `node`. If the node with the key is found, it is assigned to `z`, and the loop continues to search further in the appropriate direction.
+4. Once the loop ends, the code checks if `z` is still the sentinel node `self.TNULL`. If it is, it means the key was not found in the tree, so a message is printed, and the method returns, indicating that the deletion cannot be performed.
+5. If the node with the key is found (stored in `z`), the code continues with the deletion process.
+6. `y` is set to `z`, and `y_original_color` is used to store the original color of `y` before deletion. This is done to determine if the color of `y` changes during the deletion process and if further adjustments are needed to maintain the properties of the red-black tree.
+7. The code checks if the left child of `z` is the sentinel node (`self.TNULL`). If it is, it means that `z` has no left child or only has a right child.
+8. If the left child of `z` is the sentinel node, `x` is set to `z.right`. This will be the node that replaces `z` in the tree.
+9. The `__rb_transplant(z, z.right)` method is called to replace node `z` with node `x` in the tree. The `__rb_transplant` method likely handles the removal of a node and ensures the proper adjustment of parent-child relationships.
+10. If the right child of `z` is the sentinel node, it means that `z` has only a left child.
+11. If the right child of `z` is the sentinel node, `x` is set to `z.left`. Again, this will be the node that replaces `z` in the tree.
+12. The `__rb_transplant(z, z.left)` method is called to replace node `z` with node `x` in the tree.
+13. If `z` has both left and right children, it enters the `else` block.
+14. `y` is set to the minimum node in the right subtree of `z`. This is done to find the successor of `z`, which is the node with the smallest value greater than `z`. The minimum node in the right subtree can replace `z` without violating the order properties of the binary search tree.
+15. `y_original_color` is used to store the original color of `y` before deletion.
+16. `x` is set to `y.right`, as this will be the node that replaces `y` in the tree.
+17. If `y.parent` is equal to `z`, it means that `y` is the direct right child of `z`. In this case, `x.parent` is set to `y`.
+18. If `y.parent` is not equal to `z`, it means that `y` is not the direct right child of `z`. In this case, the `__rb_transplant(y, y.right)` method is called to replace node `y` with node `y.right`. This step ensures that `y` is removed from its current position in the tree.
+19. After `y` has been removed from its current position, `y.right` is updated to point to `z.right`, and `z.right.parent` is set to `y`. This step preserves the right subtree of `z` when `y` is replaced in the tree.
+20. The `__rb_transplant(z, y)` method is called to replace node `z` with node `y` in the tree. This step effectively removes `z` from its current position and replaces it with `y`.
+21. `y.left` is updated to point to `z.left`, and `z.left.parent` is set to `y`. This step preserves the left subtree of `z` when `y` is replaced in the tree.
+22. The color of `y` is set to the color of `z`. This is done because the color of `y` might change during the deletion process, and we want to ensure that the properties of the red-black tree are maintained.
+23. Finally, the code checks if the original color of `y` (`y_original_color`) was black. If it was black, then it means that a black node was removed from the tree, which might lead to a violation of the red-black tree properties. Further adjustments or "fix-ups" may be needed to restore the properties of the red-black tree. The `delete_fix(x)` method (not shown in this code snippet) is likely responsible for handling the necessary fix-up operations.
+
+However, the key difference for Red-Black tree is the RB-DELETE-FIXUP(T, x) function. This is the function responsible for restoring the Red-Black Tree properties after the deletion of a node. In a Red-Black Tree, after a node is deleted (as shown in the given code), the tree might violate one or more Red-Black properties, such as the Red-Black color property and the Black Height property. The RB-DELETE-FIXUP(T, x) function will handle these violations and apply various rotation and recoloring operations to rebalance the tree and ensure that it maintains its Red-Black properties. The fix-up process is what makes the deletion in a Red-Black Tree different from a regular BST deletion. Below is the RB-DELETE-FIXUP(T, x) function pseudocode [16].
+
+```
+RB-DELETE-FIXUP(T, x)
+  while x!= T.root and x.color == black
+      if x == x.parent.left
+          w = x.parent.right
+          if w.color == red 
+              w.color = black
+              x.parent.color = red
+              LEFT-ROTATE(T, x.parent)
+              w = x.parent.right
+          if w.left.color == black and w.right.color == black 
+              w.color = red
+              x = x.parent
+          else 
+              if w.right.color == black 
+                  w.left.color = black
+                  w.color = red
+                  RIGHT-ROTATE(T, w)
+                  w = x.parent.right
+              
+              w.color = x.parent.color
+              x.parent.color = black
+              w.right.color = black
+              LEFT-ROTATE(T, x.parent)
+              x = T.root
+      else
+          code will be symmetric
+  x.color = black
+```
+
+Here is the `RB-DELETE-FIXUP(T, x)` function in Python.  
+
+```
+ def delete_fix(self, x):
+        while x != self.root and x.color == 0:
+            if x == x.parent.left:
+                s = x.parent.right
+                if s.color == 1:
+                    s.color = 0
+                    x.parent.color = 1
+                    self.left_rotate(x.parent)
+                    s = x.parent.right
+
+                if s.left.color == 0 and s.right.color == 0:
+                    s.color = 1
+                    x = x.parent
+                else:
+                    if s.right.color == 0:
+                        s.left.color = 0
+                        s.color = 1
+                        self.right_rotate(s)
+                        s = x.parent.right
+
+                    s.color = x.parent.color
+                    x.parent.color = 0
+                    s.right.color = 0
+                    self.left_rotate(x.parent)
+                    x = self.root
+            else:
+                s = x.parent.left
+                if s.color == 1:
+                    s.color = 0
+                    x.parent.color = 1
+                    self.right_rotate(x.parent)
+                    s = x.parent.left
+
+                if s.right.color == 0 and s.right.color == 0:
+                    s.color = 1
+                    x = x.parent
+                else:
+                    if s.left.color == 0:
+                        s.right.color = 0
+                        s.color = 1
+                        self.left_rotate(s)
+                        s = x.parent.left
+
+                    s.color = x.parent.color
+                    x.parent.color = 0
+                    s.left.color = 0
+                    self.right_rotate(x.parent)
+                    x = self.root
+        x.color = 0
+```
+
+Let's break down the above code step by step:
+
+1. The function uses a while loop to traverse up the tree from node `x` (the node that replaced the deleted node) to the root, as long as `x` is not the root and its color is black (`x.color == 0`). This is because violating properties can propagate upward in the tree after deletion, so we need to fix the tree from the bottom up.
+2. Within the loop, the function checks if `x` is the left child of its parent. Based on this, it performs different fix-up steps for the left and right cases.
+3. If `x` is the left child (`x == x.parent.left`), the function sets `s` to be the sibling of `x` (the right child of `x.parent`).
+4. If the sibling `s` is red (`s.color == 1`), it means that the sibling has two black children. To resolve this, the function performs some color changes and rotations:
+   - `s.color` is set to black (`0`).
+   - `x.parent.color` is set to red (`1`).
+   - A left rotation is performed on `x.parent` to make the left child of `x.parent` (previously `s`) become the new sibling.
+   - `s` is updated to the new sibling (right child of `x.parent`).
+5. Now, `s` (the sibling) is guaranteed to be black. The function then checks the colors of `s`'s children.
+   - If both children of `s` are black (`s.left.color == 0 and s.right.color == 0`), the function makes `s` red (`s.color = 1`) and moves up the tree to its parent (`x = x.parent`).
+   - If at least one of `s`'s children is red, additional rotations and color changes are required to restore the red-black tree properties:
+     - If `s.right` is black (`s.right.color == 0`), the function makes `s.left` black (`s.left.color = 0`), and `s` itself red (`s.color = 1`).
+     - A right rotation is performed on `s` to make the left child of `s` (previously `s.left`) become the new sibling.
+     - `s` is updated to the new sibling (left child of `x.parent`).
+   - `s` is given the same color as its parent `x.parent`, and `x.parent` is made black (`x.parent.color = 0`).
+   - `s.right` is made black (`s.right.color = 0`).
+   - A left rotation is performed on `x.parent`.
+6. After exiting the while loop, `x` is set to be the root of the tree, and its color is set to black (`x.color = 0`) to ensure that the root of the tree is always black.
+
+By performing these rotations and color changes while traversing up the tree, the `delete_fix` function restores the red-black tree properties, ensuring that the tree remains balanced and satisfies all the necessary constraints after a node deletion.
+
+Next, we have the leftRotate() operation, which is responsible for performing a single left rotation. Typically, this method would be marked as private since it serves as a helper function. It follows the algorithm CLRS [14] as described below:
+
+```
+ pseudocode for left rotations
+ pre: right[x] != nil[T]
+ pre: root's parent is nill[T]
+
+ Left-Rotate(T,x)
+    y = right[x]
+    right[x] = left[y]
+    p[left[y]] = x
+    p[y] = p[x]
+
+
+    if p[x] == nil[T] then root[T] = y
+    else
+       if x == left[p[x]] then left[p[x]] = y
+       else
+          right[p[x]] = y
+    left[y] = x
+    p[x] = y
+```
+Here is the `leftRotate()` function in Python.  
+```
+    def left_rotate(self, x):
+        y = x.right
+        x.right = y.left
+        if y.left != self.TNULL:
+            y.left.parent = x
+
+        y.parent = x.parent
+        if x.parent == None:
+            self.root = y
+        elif x == x.parent.left:
+            x.parent.left = y
+        else:
+            x.parent.right = y
+        y.left = x
+        x.parent = y
+```
+Let's explain the above code step by step:  
+1. The method `left_rotate` takes a single parameter `x`, which represents the pivot node (or the node around which the left rotation will occur).
+2. A temporary variable `y` is used to store the right child of node `x`, which will become the new root of the subtree after the left rotation.
+3. The left child of node `y` is assigned to be the right child of node `x`. This step ensures that the left subtree of `y` (if any) becomes the right subtree of `x`.
+4. The code then checks if the left child of `y` is not a sentinel node (`self.TNULL`). If it is not a sentinel node, it means that `y` had a left child, and we need to update the parent reference of that left child to point to `x`. This step is necessary to maintain the parent-child relationships in the tree after the rotation.
+5. The parent of node `y` is updated to point to the parent of node `x`. This step ensures that the parent of the original subtree rooted at `x` (which could be the root of the entire tree or another subtree) now correctly points to `y` as its child.
+6. The code checks if the parent of `x` is `None`. If it is, it means that `x` was the root of the tree before the rotation. In this case, the root of the entire tree is updated to be `y`.
+7. If the parent of `x` is not `None`, then the code checks whether `x` was the left child or the right child of its parent. Depending on this information, the left or right child reference of the parent is updated to point to `y`. This ensures that the subtree rooted at `y` is correctly linked to its parent.
+8. Now, `x` becomes the left child of `y` since `y` is now the new root of the subtree. The left rotation operation is completed by updating the parent of `x` to be `y`.
+
+After executing this code, the subtree rooted at node `x` is rotated to the left, and `y` becomes the new root of the subtree, maintaining the red-black tree properties. The overall structure and order of the elements in the tree are preserved.  
+
+Following the left rotation operation, we also have the rightRotate() operation, responsible for performing a single right rotation. Like the previous method, this one is typically marked as private since it serves as a helper function. The algorithm for the rightRotate() method, based on CLRS [14], is as follows:
+
+```
+ pseudocode for right rotation
+ pre: left[x] != nil[T]
+ pre: root's parent is nill[T]
+ Right-Rotate(T,x)
+    y = left[x]           // y now points to node to left of x
+    left[x] = right[y]    // y's right subtree becomes x's left subtree
+    p[right[y]] = x       // right subtree of y gets a new parent
+    p[y] = p[x]           // y's parent is now x's parent
+
+    // if x is at root then y becomes new root
+    if p[x] == nil[T] then root[T] = y
+    else
+        // if x is a left child then adjust x's parent's left child or...
+
+         if x == left[p[x]] then left[p[x]] = y
+         else
+         // adjust x's parent's right child
+            right[p[x]] = y
+    // the right child of y is now x
+    right[y] = x
+    // the parent of x is now y
+    p[x] = y
+ ```
+ Here is the rightRotate function in Python.  
+ ```
+   def right_rotate(self, x):
+        y = x.left
+        x.left = y.right
+        if y.right != self.TNULL:
+            y.right.parent = x
+
+        y.parent = x.parent
+        if x.parent == None:
+            self.root = y
+        elif x == x.parent.right:
+            x.parent.right = y
+        else:
+            x.parent.left = y
+        y.right = x
+        x.parent = y
+ ```
+Let's explain the above code step by step:  
+1. The method `right_rotate` takes a single parameter `x`, which represents the pivot node (or the node around which the right rotation will occur).
+2. A temporary variable `y` is used to store the left child of node `x`, which will become the new root of the subtree after the right rotation.
+3. The right child of node `y` is assigned to be the left child of node `x`. This step ensures that the right subtree of `y` (if any) becomes the left subtree of `x`.
+4. The code then checks if the right child of `y` is not a sentinel node (`self.TNULL`). If it is not a sentinel node, it means that `y` had a right child, and we need to update the parent reference of that right child to point to `x`. This step is necessary to maintain the parent-child relationships in the tree after the rotation.
+5. The parent of node `y` is updated to point to the parent of node `x`. This step ensures that the parent of the original subtree rooted at `x` (which could be the root of the entire tree or another subtree) now correctly points to `y` as its child.
+6. The code checks if the parent of `x` is `None`. If it is, it means that `x` was the root of the tree before the rotation. In this case, the root of the entire tree is updated to be `y`.
+7. If the parent of `x` is not `None`, then the code checks whether `x` was the right child or the left child of its parent. Depending on this information, the right or left child reference of the parent is updated to point to `y`. This ensures that the subtree rooted at `y` is correctly linked to its parent.
+8. Now, `x` becomes the right child of `y` since `y` is now the new root of the subtree. The right rotation operation is completed by updating the parent of `x` to be `y`.
+
+After executing rightRotate function code, the subtree rooted at node `x` is rotated to the right, and `y` becomes the new root of the subtree, maintaining the red-black tree properties. The overall structure and order of the elements in the tree are preserved.  
+
+Throughout the process of implementing Red-Black Trees in Python, I encountered several significant challenges:
+
+**Challenge 1: Node Color Representation**  
+Effectively representing node colors in Python was one of the primary challenges. In Python, conventional boolean values (True and False) are typically used for binary color representations. However, Red-Black Trees require three colors - red, black, and a sentinel color for null leaves. Selecting a suitable color representation demanded careful consideration as it directly impacted the code's readability and maintainability.
+
+**Challenge 2: Rotations and Parent-Child Relationships**  
+The cornerstone of Red-Black Trees lies in rotation operations, specifically left and right rotations. These rotations are vital for maintaining tree balance during insertion and deletion operations. Understanding the intricacies of these rotations and ensuring accurate maintenance of parent-child relationships presented significant challenges. Additionally, it was crucial to implement these rotations efficiently, as they played a critical role in the overall performance of Red-Black Trees.
+
+**Challenge 3: Node Insertion and Deletion**  
+Implementing node insertion and deletion while preserving the Red-Black Tree properties proved to be the most demanding aspect of the project. Ensuring that the insertion and deletion processes maintained color balance and tree order required meticulous attention to detail. Handling various cases, including node colors, parent-child relationships, and tree balancing after insertions and deletions, demanded rigorous problem-solving and intellectual effort.
+
+**Challenge 4: Handling Special Cases**  
+Red-Black Trees are governed by specific rules to ensure balance and correctness. Managing special cases, such as root changes during insertion or maintaining balance after deletion, was challenging. These cases demanded a thorough understanding of the underlying principles and careful coding to ensure that all properties of Red-Black Trees were consistently preserved.
+
+**Challenge 5: Recursion and Complexity Analysis**  
+During the implementation of Red-Black Trees in Python, I encountered several situations where recursion was necessary. Understanding the depth of recursion and analyzing the time complexity of operations were essential to ensure that the implementation remained efficient and scalable.
+
+
 
 
 
@@ -586,3 +1019,5 @@ z - is the new node
 [13] Byorgey, B. Counting Inversions via Rank Queries. Brent's Blog. Retrieved July 15, 2023, from https://byorgey.wordpress.com/2019/12/18/counting-inversions-via-rank-queries/  
 [14] Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein. 2009. Introduction to Algorithms, Third Edition (3rd. ed.). The MIT Press.  
 [15] Andrew Carnegie Mellon University. RedBlackTree. JavaDocs. Carnegie Mellon University. https://www.andrew.cmu.edu/user/mm6/95-771/examples/RedBlackTreeProject/dist/javadoc/redblacktreeproject/RedBlackTree.html#inOrderTraversal(redblacktreeproject.RedBlackNode)  
+[16] CodesDope. Data Structures - Red-Black Trees Deletion. CodesDope. Retrieved July 15, 2023, from https://www.codesdope.com/course/data-structures-red-black-trees-deletion/  
+[17] AskPython. Red-Black Tree in Python. AskPython. Retrieved July 15, 2023, from https://www.askpython.com/python/examples/red-black-tree-in-python
