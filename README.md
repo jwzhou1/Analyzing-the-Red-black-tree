@@ -341,6 +341,41 @@ Now, let's explore the process of deleting a specific node from the Red-Black tr
 - What is the empirical analysis?
 - Provide specific examples / data.
 
+The code writing can be found in the following files:
+* [CountSwapRB.py]  -- test for the number of swaps in Red-Black Tree
+
+**You can run `CountSwapRB.py` to replicate the first empirical result**
+
+In my first empirical analysis, I conducted a study to count the number of swaps when adding nodes from 1 to 30000 to a Red-Black tree data structure. The maximum number of swaps observed in this range was recorded as 26. To perform this analysis, I implemented a Python program using a Red-Black tree and a recursive approach.
+
+The Red-Black tree structure is represented by a class, and the key method for counting swaps is called count_swaps. Additionally, there is a private method _count_swaps_recursive that performs the recursive counting of swaps for each node in the tree. The tree nodes are categorized into two colors: 'RED' and others (e.g., 'BLACK' or 'NIL').
+
+```
+    def count_swaps(self):
+        return self.swap_count
+
+    def _count_swaps_recursive(self, node):
+        if node == self.nil:
+            return 0
+
+        left_swaps = self._count_swaps_recursive(node.left)
+        right_swaps = self._count_swaps_recursive(node.right)
+
+        swaps = left_swaps + right_swaps
+
+        if node.color == 'RED':
+            swaps += 1
+
+        return swaps
+
+    def count_swaps_in_tree(self):
+        return self._count_swaps_recursive(self.root)
+```
+
+I performed an analysis where the last added nodes were set at 30000 because the process of counting swaps took more than 1 minute to complete. The chart below represents the output of the number of swaps in the Red-Black tree. The X-axis represents the nodes added, and the Y-axis represents the corresponding number of swaps.
+
+
+
 
 ## Application
 
@@ -408,6 +443,9 @@ Now let's explore various fields and areas where red-black trees are commonly us
 - What libraries did you use?
 - What were the challenges you faced?
 - Provide key points of the algorithm/datastructure implementation, discuss the code.
+
+The code writing can be found in the following files:
+* [RBTreeImp.py]  -- implementation of Red-Black Tree in Python
 
 **You can run `RBTreeImp.py` for the Implementation of the Red-Black Tree. You can insert nodes, delete nodes and print the Red-Black Tree in the `RBTreeImp.py` by calling `bst.insert()`, `bst.delete_node()` and `bst.print_tree()` in the main function. My code is inspired from AskPython.com [17].**
 
