@@ -374,8 +374,55 @@ The Red-Black tree structure is represented by a class, and the key method for c
 
 I performed an analysis where the last added nodes were set at 30000 because the process of counting swaps took more than 1 minute to complete. The chart below represents the output of the number of swaps in the Red-Black tree. The X-axis represents the nodes added, and the Y-axis represents the corresponding number of swaps.
 
+<img src="images/CountSwapRB.png" alt="CountSwapRB"/>
 
+The maximum number of swaps being recorded as 26 indicates that, during the insertion process of the 30,000 nodes, in the worst case, the algorithm encountered a situation where it needed to perform up to 26 swaps to maintain the Red-Black tree's properties and keep it balanced. It's worth noting that the number of swaps during insertion may vary depending on the specific sequence of nodes being inserted, and 26 swaps represent the worst-case scenario observed in this specific case. In most cases, the number of swaps required during insertion in a Red-Black tree is logarithmic in the number of nodes being inserted, which ensures efficient performance.
 
+In my second empirical analysis, I conducted a study on red nodes of Red-Black Trees. The objective was to count the number of red nodes in the tree as nodes were added sequentially from 1 to 30000. Throughout the process, I kept track of the maximum number of red nodes observed, which turned out to be 26.
+
+To achieve this analysis, I developed a Python program using a Red-Black Tree and implemented a method called `count_red_nodes`. The `count_red_nodes` method is a recursive function that traverses the Red-Black Tree. It takes a `node` as input and returns the count of red nodes in the subtree rooted at that node.
+
+```
+def count_red_nodes(self, node):
+    if node == self.NIL_LEAF:  
+        return 0
+    red_nodes_left = self.count_red_nodes(node.left) 
+    red_nodes_right = self.count_red_nodes(node.right)  
+    
+    if node.color == 'RED':  
+        return 1 + red_nodes_left + red_nodes_right
+    else:  
+        return red_nodes_left + red_nodes_right
+```
+
+I performed an analysis where the last added nodes were set at 30000 because the process of counting swaps took more than 1 minute to complete. The chart below represents the output of the number of red nodes in the Red-Black tree. The X-axis represents the total nodes in a Red-Black tree, and the Y-axis represents the corresponding number of red nodes.
+
+<img src="images/CountRedNodes.png" alt="CountRedNodes"/>
+
+During my third empirical investigation, I conducted a study focused on the black nodes of Red-Black Trees. The main goal was to observe the count of black nodes in the tree as nodes were incrementally added from 1 to 30,000. Throughout this study, I meticulously recorded the maximum number of black nodes observed, which ultimately amounted to 29,981.
+
+To conduct this analysis, I created a Python program that utilized a Red-Black Tree and implemented a method called `count_black_nodes`. This method is a recursive function responsible for traversing the Red-Black Tree.
+
+The `count_black_nodes` function takes a node as input, and the method starts by checking if the current node is a leaf node (NIL_LEAF) in the Red-Black Tree. If it is a leaf node, the function returns 0 since there are no black nodes to count in this case. Next, the function proceeds to recursively call itself for the left and right child nodes of the current node. This step enables the function to explore the entire tree and count the black nodes in each subtree. After obtaining the counts of black nodes from the left and right subtrees, the function then examines the color of the current node. If the node's color is "BLACK," it includes the current node in the count by adding 1 to the sum of left and right counts. Otherwise, if the node's color is "RED," it excludes the current node from the count and returns the sum of left and right counts without any additions.
+
+```
+  def count_black_nodes(self, node):
+        if node == self.NIL_LEAF:
+            return 0
+
+        left_count = self.count_black_nodes(node.left)
+        right_count = self.count_black_nodes(node.right)
+
+        if node.color == "BLACK":
+            return left_count + right_count + 1
+        else:
+            return left_count + right_count
+
+```
+
+Similarly, I performed an analysis where the last added nodes were set at 30000 because the process of counting swaps took more than 1 minute to complete. The chart below represents the number of black nodes in the Red-Black tree. The X-axis represents the total nodes in a Red-Black tree, and the Y-axis represents the corresponding number of black nodes.
+
+<img src="images/CountBlackNodes.png" alt="CountBlackNodes"/>
 
 ## Application
 
