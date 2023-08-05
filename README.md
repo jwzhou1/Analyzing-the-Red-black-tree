@@ -1,7 +1,7 @@
 # Research Paper
 * Name: Jiawei Zhou
 * Semester: Summer 2023
-* Topic: Red–black tree
+* Topic: Analyzing the Red–black tree
 * Link The Repository: https://github.com/jwzhou1/FinalResearchPaper.git
 
 
