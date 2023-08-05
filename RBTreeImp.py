@@ -371,5 +371,5 @@ if __name__ == "__main__":
     bst.print_tree()
     print("\nAfter deleting an element")
     # Deleting a node with a specific key from the Red-Black Tree.
-    bst.delete_node(40)
+    bst.delete_node(60)
     bst.print_tree()

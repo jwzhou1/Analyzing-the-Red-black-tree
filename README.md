@@ -6,13 +6,23 @@
 
 
 ## Introduction
-- Provide an introduction to the rest of the paper. 
+In the domain of computer science, the significance of data structures cannot be overstated when it comes to effectively organizing and managing extensive volumes of data. Within the wide spectrum of available data structures, Red-Black Trees emerge as a sophisticated and highly efficient solution for maintaining ordered data while guaranteeing balanced performance. In this final research paper, i will delve into the complexities of Red-Black Trees, their role in addressing fundamental problems, and embark on an intriguing journey through their historical evolution.
 
-In the domain of computer science, the significance of data structures cannot be overstated when it comes to effectively organizing and managing extensive volumes of data. Within the wide spectrum of available data structures, Red-Black Trees emerge as a sophisticated and highly efficient solution for maintaining ordered data while guaranteeing balanced performance. In this final research paper, we will delve into the complexities of Red-Black Trees, their role in addressing fundamental problems, and embark on an intriguing journey through their historical evolution.
+Red-Black Tree is a self-balancing binary search tree that maintains a balance between its left and right subtrees. The tree nodes are augmented with an extra attribute, color, which can either be red or black. The primary goal of the Red-Black Tree is to ensure that the tree remains approximately balanced, which helps in maintaining efficient search, insertion, and deletion operations with a logarithmic time complexity.
 
-Red-Black Trees are a type of self-balancing binary search trees (BSTs) that offer a systematic and flexible approach to organizing data, especially in scenarios involving dynamic insertion and deletion operations. These trees enhance the standard BST structure by incorporating additional properties and operations to maintain balance, resulting in efficient and predictable runtime complexity.
+The Red-Black Tree follows five essential properties:
 
-The most notable characteristic of Red-Black Trees is the color assigned to each of their nodes, which can be either red or black. This color scheme plays a crucial role in achieving a balanced tree structure in terms of depth and height, thereby ensuring efficient search, insertion, and deletion operations. Through adherence to specific rules and constraints, Red-Black Trees maintain a balance that guarantees a worst-case time complexity of O(log n) for fundamental operations.
+1. Every node is colored either red or black.
+2. The root node is always black.
+3. Red nodes cannot have red children (i.e., no two consecutive red nodes can exist on any path).
+4. Every path from the root to a leaf must have the same number of black nodes (this is known as the black-height property).
+5. Null leaf nodes (external nodes) are considered black.
+
+The balancing of the tree is achieved through a set of operations that preserve these properties during insertions and deletions. When a new node is inserted into the tree, it is initially colored red to ensure that the black-height property is maintained, and it may lead to a violation of the red-black properties. To restore the properties, a series of rotations and color flips are performed along the path from the inserted node to the root.
+
+The most crucial aspect of maintaining the balance is the process of "rebalancing" after an insertion or deletion operation. If a red node's parent is also red, it violates the property of red nodes not having red children. To resolve this, we perform rotations and recoloring of nodes to ensure that no consecutive red nodes exist. The tree rotations help adjust the structure of the tree while maintaining the binary search tree property. There are two types of rotations: left rotation and right rotation.
+
+During the rebalancing process, the tree might go through a series of rotations, but it guarantees that the height of the tree remains logarithmic, and all the Red-Black Tree properties are preserved. Consequently, the search, insert, and delete operations have a time complexity of O(log n), making Red-Black Trees an efficient and balanced data structure for various applications.
 
 Example of a red–black tree:  
 
@@ -28,9 +38,11 @@ Red-Black Trees are designed to address the challenge of maintaining a balanced 
 
 Red-Black Trees mitigate this issue by implementing a set of rules and operations that ensure structural balance. These trees guarantee that the longest path from the root to any leaf node is no more than twice as long as the shortest path, thus promoting a balanced and effective search tree for various applications.
 
-The concept of Red-Black Trees emerged from the pioneering work of Rudolf Bayer, who introduced this tree structure in 1972 during his Ph.D. studies at the University of Karlsruhe, Germany. Bayer's innovative idea involved annotating nodes with color information to achieve balance, giving birth to the red-black paradigm. [2]
+The concept of Red-Black Trees emerged from the pioneering work of Rudolf Bayer, who introduced this tree structure in 1972 during his Ph.D. studies at the University of Karlsruhe, Germany[20]. Bayer's innovative idea involved annotating nodes with color information to achieve balance, giving birth to the red-black paradigm. [2]
 
-Building upon Bayer's initial concept, he collaborated with his colleague Volker Günter and published a seminal paper in 1978 titled "Symmetric Binary B-Trees: Data Structure and Maintenance Algorithms." This influential publication provided a comprehensive exploration of red-black trees, delving into the intricate details of maintaining the tree's balance. The paper outlined the rules for ensuring the correct coloring and structural properties of red-black trees, along with efficient algorithms for performing insertion and deletion operations.
+Building upon Bayer's idea, Guibas and Sedgewick (1978) [21] derived the red–black tree from the symmetric binary B-tree. The choice of the color "red" for the tree was influenced by the aesthetics of the color produced by the available color laser printer at Xerox PARC during their work. In 1993, Arne Andersson [22] introduced the concept of a right-leaning tree to simplify insert and delete operations. Later, in 1999, Chris Okasaki [23] demonstrated how to make the insert operation purely functional. This involved managing only four unbalanced cases and one default balanced case in the balance function.
+
+The original algorithm employed eight unbalanced cases, but in 2001, Cormen et al. (2001) [24] reduced them to six unbalanced cases. Additionally, Sedgewick (2008) [25] showed that the insert operation can be implemented in just 46 lines of Java code. Subsequently, he proposed the left-leaning red–black tree in 2008, leveraging Andersson's idea, which further simplified the insert and delete operations. Originally, Sedgewick allowed nodes with two red children, making his trees more akin to 2–3–4 trees. However, this restriction was later added, making the new trees more similar to 2–3 trees. The new implementation of the insert algorithm was further optimized and reduced to just 33 lines of code, significantly shorter than the original 46 lines of code.
 
 Since their inception, Red-Black Trees have gained widespread recognition and adoption within the realms of computer science and software engineering. They have become integral components of numerous programming languages and libraries, serving as the fundamental building blocks for various essential operations such as associative arrays, ordered sets, and dictionaries.
 
@@ -40,11 +52,9 @@ Through their balanced efficiency, Red-Black Trees continue to empower developer
 
 In this comprehensive study, we embark on an exploration to gain a deep understanding of Red-Black Trees, uncovering their construction, maintenance, and the theoretical principles that underpin their exceptional properties. Our investigation will extensively cover balancing algorithms and intricacies like color propagation, essential for comprehending how these trees maintain their balance.
 
-The objectives of this research are diverse. Our primary aim is to provide readers with a comprehensive understanding of the fundamental principles and unique characteristics that distinguish Red-Black Trees from other balanced binary search trees. We will thoroughly examine the rules governing their construction and explore how the insertion and deletion processes dynamically adapt to maintain balance.
+The objectives of this research are diverse. Our primary aim is to provide readers with a comprehensive understanding of the fundamental principles and unique characteristics that distinguish Red-Black Trees from other balanced binary search trees. I will thoroughly examine the rules governing their construction and explore how the insertion and deletion processes dynamically adapt to maintain balance. I will conduct a comprehensive analysis of Red-Black Trees against other balancing techniques, critically assessing their strengths and weaknesses. By contrasting them with alternatives such as AVL Trees and B-Trees, our study aims to offer valuable insights to aid readers in selecting the most suitable data structure for specific use cases.
 
-As part of our investigation, we will conduct a comparative analysis of Red-Black Trees against other balancing techniques, critically assessing their strengths and weaknesses. By contrasting them with alternatives such as AVL Trees, B-Trees, and Splay Trees, our study aims to offer valuable insights to aid readers in selecting the most suitable data structure for specific use cases.
-
-In conclusion, this study seeks to be a comprehensive and informative resource for students, researchers, and professionals keen on exploring the elegance and efficiency of Red-Black Trees. By grasping the inner workings of these trees, we can leverage their power to develop faster, more reliable algorithms and applications that will undoubtedly shape the future of computer science and software engineering.
+In conclusion, this study seeks to be a comprehensive and informative resource for students, researchers, and professionals keen on exploring the elegance and efficiency of Red-Black Trees. By grasping the inner workings of these trees, i can leverage their power to develop faster, more reliable algorithms and applications that will undoubtedly shape the future of computer science and software engineering.
 
 
 ## Analysis of Algorithm/Datastructure
@@ -65,21 +75,81 @@ A Red-Black Tree is a type of self-balancing binary search tree that ensures the
 While every AVL tree can be transformed into a Red-Black tree by assigning each node a color, it's important to note that not every Red-Black tree can be considered an AVL tree. The reason for this distinction lies in their respective balancing properties. AVL trees adhere to strict height-balance conditions, ensuring that the height difference between the left and right subtrees of any node is no more than one. On the other hand, Red-Black trees, while self-balancing, do not enforce complete height-balance and may have a greater height difference between subtrees. As a result, a Red-Black tree might not meet the criteria to be classified as an AVL tree.
 
 Let's begin with a comprehensive overview of the time and space complexity of Red-Black Tree operations[4]:
-| OPERATION | AVERAGE CASE | WORST CASE |
-|-----------|--------------|------------|
-| Space     | $O(n)$       | $O(n)$     |
-| Search    | $O(log n)$   | $O(log n)$ |
-| Insert    | $O(log n)$   | $O(log n)$ |
-| Delete    | $O(log n)$   | $O(log n)$ |
+| OPERATION | AVERAGE CASE | WORST CASE | BEST CASE  |
+|-----------|--------------|------------|------------|
+| Space     | $O(n)$       | $O(n)$     | $O(n)$     |
+| Search    | $O(log n)$   | $O(log n)$ | $O(log n)$ |
+| Insert    | $O(log n)$   | $O(log n)$ | $O(log n)$ |
+| Delete    | $O(log n)$   | $O(log n)$ | $O(log n)$ |
 
+Let's compare the Red-Black Tree with some similar data structures in terms of time and space complexity [18-19]:
+
+**Similar Algorithm Comparison Chart**
+
+| Algorithm       | Operations | Average Time Complexity   | Worst-case Time Complexity   | Space Complexity |
+|-----------------|------------|---------------------------|------------------------------|------------------|
+| Red-black tree  | Insert     | $O(log n)$                | $O(log n)$                   | $O(n)$           |
+|                 | Delete     | $O(log n)$                | $O(log n)$                   |                  |
+|                 | Search     | $O(log n)$                | $O(log n)$                   |                  |
+| Binary tree     | Insert     | $O(log n)$                | $O(n)$                       | $O(n)$           |
+|                 | Delete     | $O(log n)$                | $O(n)$                       |                  |
+|                 | Search     | $O(log n)$                | $O(n)$                       |                  |
+| AVL tree        | Insert     | $O(log n)$                | $O(log n)$                   | $O(n)$           |
+|                 | Delete     | $O(log n)$                | $O(log n)$                   |                  |
+|                 | Search     | $O(log n)$                | $O(log n)$                   |                  |
+| B-tree          | Insert     | $O(log n)$                | $O(log n)$                   | $O(n)$           |
+|                 | Delete     | $O(log n)$                | $O(log n)$                   |                  |
+|                 | Search     | $O(log n)$                | $O(log n)$                   |                  |
+
+1. Binary Search Tree (BST):
+   - Time Complexity:
+     - Red-Black Tree: Insertion, deletion, and search operations take $O(log n)$ time on average and in the worst case.
+     - BST: In the worst case, a standard binary search tree can degenerate into a linked list, resulting in $O(n)$ time complexity for insertion, deletion, and search.
+
+   - Space Complexity:
+     - Red-Black Tree: Requires additional space for storing color, which increases the space overhead compared to a regular BST.
+     - BST: Requires only space for the nodes and their data, without any additional color information. In general, the space complexity of both Red-Black Trees and BSTs is $O(n)$.
+
+2. AVL Tree (Balanced Binary Search Tree):
+   - Time Complexity:
+     - Red-Black Tree: Insertion, deletion, and search operations take $O(log n)$ time on average and in the worst case.
+     - AVL Tree: Similar to the Red-Black Tree, AVL Trees maintain balance through rotations and guarantee a height difference of at most 1 between subtrees. Hence, the time complexity is also $O(log n)$ for insertion, deletion, and search.
+
+   - Space Complexity:
+     - Both Red-Black Trees and AVL Trees require space proportional to the number of nodes (O(n)).
+
+3. B-Trees:
+   - Time Complexity:
+     - Red-Black Tree: Operations take $O(log n)$ time on average and in the worst case.
+     - B-Trees: B-Trees are designed for disk-based data structures and have higher fan-out, making them suitable for scenarios with large datasets and slow disk access. B-Tree operations typically have time complexity $O(log n)$ as well.
+
+   - Space Complexity:
+     - B-Trees generally require more space per node than Red-Black Trees due to the increased fan-out and multiple keys per node. However, the overall space complexity is still $O(n)$.
+
+Thus, you can see that Red-Black Trees have a balance between fast operations and relatively efficient use of space compared to some other balanced tree structures like AVL Trees and B-Trees. They are generally favored in scenarios where both search and insertion/deletion operations need to be efficient and the data structure needs to remain balanced.  
+
+In addition, Red-Black Tree, Binary Search Tree, AVL Tree, and B-Tree are all types of binary search trees, but they have different characteristics that make them suitable for specific scenarios.
+
+The Binary Search Tree (BST) is the simplest form among these data structures. It relies on a sorted binary tree, where each node has at most two children, and the left child is always smaller than the parent, while the right child is larger. This property allows for efficient searching with an average time complexity of O(log n) for balanced trees. However, the BST can become unbalanced, resulting in skewed trees with a worst-case time complexity of O(n) for searching and insertion, leading to performance degradation. Despite its simplicity, BSTs are useful for smaller datasets where balanced trees are easily maintained, and when frequent insertions and deletions are not anticipated.
+
+AVL Trees are a type of balanced binary search tree that ensures a balance factor of at most 1 for every node, which guarantees logarithmic search, insertion, and deletion times (O(log n)). This balance is maintained through rotations and restructuring operations, which help to maintain the tree's balance after insertions and deletions. The AVL Tree's strength lies in its guaranteed balanced structure, making it efficient for frequent update operations and large datasets. However, the AVL Tree's main weakness is the additional overhead required to maintain the balance, resulting in slightly slower insert and delete operations compared to Red-Black Trees.
+
+Red-Black Trees are also balanced binary search trees, providing a compromise between the complexity of AVL Trees and the simplicity of BSTs. They ensure that the longest path from the root to a leaf is no more than twice the shortest path, which guarantees a logarithmic time complexity (O(log n)) for searching, insertion, and deletion operations. Red-Black Trees require fewer rotations and restructuring operations compared to AVL Trees, making them more efficient for scenarios where the tree undergoes frequent updates while still maintaining reasonable balancing. Their strength lies in the overall performance balance, making them a great choice for general-purpose data structures, such as in the implementation of associative arrays or sets.
+
+B-Trees, on the other hand, are not binary trees but rather multi-way search trees that are designed to optimize disk read and write operations for databases and file systems. They have a variable number of keys per node, allowing them to hold more data in a single node, which reduces the tree height and the number of disk accesses during operations. B-Trees are particularly useful in scenarios with large datasets and operations involving secondary storage. Their strength lies in their ability to handle massive datasets efficiently with logarithmic time complexity (O(log n)) for searching, insertion, and deletion operations. However, B-Trees may be less efficient in memory-bound scenarios, and their complex structure makes them more challenging to implement and maintain compared to Red-Black Trees for in-memory data structures.
+
+In summary, the choice between Red-Black Trees, Binary Search Trees, AVL Trees, and B-Trees depends on the specific use case and requirements of the application. Use Red-Black Trees for general-purpose scenarios, where a balanced structure is essential for efficient operations, but without the additional overhead of AVL Trees. For memory-constrained applications, simple and smaller datasets, Binary Search Trees can be sufficient. AVL Trees are best suited when guaranteed balanced structure and frequent updates are essential. On the other hand, B-Trees are ideal for large-scale database and file system scenarios where efficient disk access is crucial for performance optimization.
+
+## Operations of Algorithm/Datastructure
+Now, let's explore the Red-Black Tree operations in detail.
 
 **Search in Red-Black tree**
 
-A Red-Black tree takes O(log n) time for search because it is a type of self-balancing binary search tree. The Red-Black tree maintains its balance by enforcing certain properties that ensure its height remains logarithmic with respect to the number of nodes (n) in the tree.
+A Red-Black tree takes $O(log n)$ time for search because it is a type of self-balancing binary search tree. The Red-Black tree maintains its balance by enforcing certain properties that ensure its height remains logarithmic with respect to the number of nodes (n) in the tree.
 
 Because of properties of red-black trees, the longest path from the root to any leaf node cannot be more than twice the length of the shortest path from the root to any leaf node. This guarantees that the tree is balanced, and the height of the tree remains logarithmic with respect to the number of nodes (O(log n)).
 
-As a result, the search operation in a Red-Black tree takes O(log n) time complexity, which is very efficient for large datasets, making it a preferred data structure for various applications.
+As a result, the search operation in a Red-Black tree takes $O(log n)$ time complexity, which is very efficient for large datasets, making it a preferred data structure for various applications.
 
 Since the Red-Black tree is a type of binary search tree, the search operation in a Red-Black tree is analogous to the search operation in a binary search tree.
 
@@ -342,7 +412,9 @@ Now, let's explore the process of deleting a specific node from the Red-Black tr
 - Provide specific examples / data.
 
 The code writing can be found in the following files:
-* [CountSwapRB.py]  -- test for the number of swaps in Red-Black Tree
+* [CountSwapRB.py]  -- test for counting the number of swaps in Red-Black Tree
+* [count_red_nodes.py]  -- test for counting the number of red nodes in Red-Black Tree
+* [count_black_nodes.py]  -- test for counting the number of black nodes in Red-Black Tree
 
 **You can run `CountSwapRB.py` to replicate the first empirical result**
 
@@ -423,6 +495,14 @@ The `count_black_nodes` function takes a node as input, and the method starts by
 Similarly, I performed an analysis where the last added nodes were set at 30000 because the process of counting swaps took more than 1 minute to complete. The chart below represents the number of black nodes in the Red-Black tree. The X-axis represents the total nodes in a Red-Black tree, and the Y-axis represents the corresponding number of black nodes.
 
 <img src="images/CountBlackNodes.png" alt="CountBlackNodes"/>
+
+I am using Python for above the analysis. One of the main factors affecting the analysis is Python's lack of direct control over memory management. In Python, objects are automatically managed by the interpreter's garbage collector, which introduces overhead and makes it challenging to precisely track memory allocations and deallocations during tree operations. This can lead to difficulty in accurately counting the number of swaps, especially when dealing with a large number of nodes in the tree.
+
+Moreover, Python's inherent bias towards ease of use and developer productivity may lead to higher-level abstractions in data structure implementations. While this is beneficial for writing concise and readable code, it might obscure the low-level details necessary for counting swaps accurately. For instance, certain Python libraries or data structure implementations might abstract away the specific swap operations, making it more challenging to analyze the exact number of swaps performed during Red-Black Tree operations.
+
+Another limitation that could impact the analysis is Python's performance relative to lower-level languages like C or C++. Python's interpreted nature and dynamic typing can introduce additional overhead during operations, making the Red-Black Tree implementation potentially slower than one written in a lower-level language. This performance difference could affect the actual number of swaps observed during execution, as Python's interpreter overhead might lead to more frequent memory reallocations or internal reordering of nodes.
+
+Despite these limitations, Python's ease of use and extensive libraries make it a popular choice for rapid prototyping and algorithm development. While analyzing the number of swaps in a Red-Black Tree implementation might be slightly influenced by Python's limitations, the insights gained from such analysis can still be valuable for understanding the overall performance and behavior of the data structure in the context of Python. Additionally, when precise control over memory and performance is critical, developers might consider optimizing critical sections of the code using native extensions or by leveraging Python's C API to interface with lower-level languages for specific performance-critical portions of the algorithm.
 
 ## Application
 
@@ -1063,6 +1143,67 @@ Let's explain the above code step by step:
 
 After executing rightRotate function code, the subtree rooted at node `x` is rotated to the right, and `y` becomes the new root of the subtree, maintaining the red-black tree properties. The overall structure and order of the elements in the tree are preserved.  
 
+You can run `RBTreeImp.py` for the Implementation of the Red-Black Tree. In `RBTreeImp.py`, we first need to create an instance of the Red-Black tree. Then we can have the sample run to insert nodes: 10, 18, 7, 15, 16, 30, 25, 40, 60 and print the Red-Black tree.
+
+```
+ bst = RedBlackTree() # Creating an instance of the RedBlackTree class.
+    # Inserting elements into the Red-Black Tree.
+    bst.insert(10)
+    bst.insert(18)
+    bst.insert(7)
+    bst.insert(15)
+    bst.insert(16)
+    bst.insert(30)
+    bst.insert(25)
+    bst.insert(40)
+    bst.insert(60)
+    bst.print_tree()
+```
+
+After insert these nodes, the program will show the final inserted Red-Black Tree:
+```
+R----16(BLACK)
+     L----10(RED)
+     |    L----7(BLACK)
+     |    R----15(BLACK)
+     R----25(RED)
+          L----18(BLACK)
+          R----40(BLACK)
+               L----30(RED)
+               R----60(RED)
+```
+
+I want to confirm whether this Red-Black Tree is correct, we can go to University of San Francisco Red-Black tree visualization (https://www.cs.usfca.edu/~galles/visualization/RedBlack.html) to confirm it.
+
+<img src="images/sample1.png" alt="sample1"/>
+
+You can see that the program's generated Red-Black Tree is exactly the same as the Tree from Red-Black Tree visualization.
+
+Next, we want to delete the node 60.
+
+```
+ bst.delete_node(60)
+    bst.print_tree()
+```
+
+After delete the node 60, the program will show the final Red-Black Tree:
+```
+R----16(BLACK)
+     L----10(RED)
+     |    L----7(BLACK)
+     |    R----15(BLACK)
+     R----25(RED)
+          L----18(BLACK)
+          R----40(BLACK)
+               L----30(RED)
+```
+
+I want to confirm whether this Red-Black Tree is correct, we can still go to University of San Francisco Red-Black tree visualization (https://www.cs.usfca.edu/~galles/visualization/RedBlack.html) to confirm it.
+
+<img src="images/sample2.png" alt="sample2"/>
+
+You can see that the program's generated Red-Black Tree is exactly the same as the Tree from Red-Black Tree visualization.
+
 Throughout the process of implementing Red-Black Trees in Python, I encountered several significant challenges:
 
 **Challenge 1: Node Color Representation**  
@@ -1081,10 +1222,19 @@ Red-Black Trees are governed by specific rules to ensure balance and correctness
 During the implementation of Red-Black Trees in Python, I encountered several situations where recursion was necessary. Understanding the depth of recursion and analyzing the time complexity of operations were essential to ensure that the implementation remained efficient and scalable.
 
 
-
 ## Summary
-- Provide a summary of your findings
-- What did you learn?
+ I have delved into the intricacies of this self-balancing binary search tree and made several key findings during my research.
+
+Red-Black Trees are an essential data structure that offer a balance between efficient operations and ease of maintenance. Through my exploration, I learned that Red-Black Trees maintain a balance between their left and right subtrees, ensuring that the longest path from the root to any leaf is no more than twice the shortest path. This property guarantees a logarithmic time complexity for search, insertion, and deletion operations, making Red-Black Trees an efficient choice for a wide range of applications.
+
+One of my significant findings was regarding the importance of color-coding nodes in Red-Black Trees. By augmenting each node with a color attribute, either red or black, Red-Black Trees ensure that no two consecutive red nodes exist along any path in the tree. This constraint plays a vital role in preserving the balanced nature of the tree and helps in maintaining efficient search and manipulation operations.
+
+Another critical aspect of Red-Black Trees that I discovered is the process of rebalancing after insertions and deletions. When a new node is inserted or a node is deleted, it might lead to a violation of the Red-Black properties. To restore the balance, a series of rotations and color flips are performed along the path from the modified node to the root. These rebalancing operations help maintain the logarithmic height of the tree and ensure that the Red-Black properties are preserved.
+
+Throughout my research, I encountered the trade-offs between Red-Black Trees and other balanced binary search trees, such as AVL Trees and B-Trees. I learned that Red-Black Trees strike a balance between the complexity of AVL Trees and the simplicity of Binary Search Trees, making them well-suited for a wide range of applications. While AVL Trees offer stricter balance guarantees, they come with higher overhead due to more frequent rotations. On the other hand, B-Trees are optimized for disk storage and large datasets but might be less efficient in-memory scenarios.
+
+In conclusion, my findings in Red-Black Trees highlighted their significance as a balanced binary search tree data structure. I gained a deep understanding of their properties, rebalancing mechanisms, and trade-offs compared to other similar data structures. Red-Black Trees provide an efficient and balanced approach to data organization and manipulation, making them a valuable tool for a diverse set of applications, from associative arrays to database indexing. My research has strengthened my knowledge of data structures and their real-world applications, allowing me to approach future challenges with a more informed and analytical perspective.
+
 
 ## Reference
 [1] Red-black tree. In Wikipedia. Retrieved July 15, 2023, from https://en.wikipedia.org/wiki/Red%E2%80%93black_tree   
@@ -1104,3 +1254,11 @@ During the implementation of Red-Black Trees in Python, I encountered several si
 [15] Andrew Carnegie Mellon University. RedBlackTree. JavaDocs. Carnegie Mellon University. https://www.andrew.cmu.edu/user/mm6/95-771/examples/RedBlackTreeProject/dist/javadoc/redblacktreeproject/RedBlackTree.html#inOrderTraversal(redblacktreeproject.RedBlackNode)  
 [16] CodesDope. Data Structures - Red-Black Trees Deletion. CodesDope. Retrieved July 15, 2023, from https://www.codesdope.com/course/data-structures-red-black-trees-deletion/  
 [17] AskPython. Red-Black Tree in Python. AskPython. Retrieved July 15, 2023, from https://www.askpython.com/python/examples/red-black-tree-in-python
+[18] Wikipedia contributors. (2021, November). AVL tree. In Wikipedia, The Free Encyclopedia. Retrieved July 15, 2023, from https://en.wikipedia.org/wiki/AVL_tree  
+[19] Wikipedia contributors. (2023, March). B-tree. In Wikipedia, The Free Encyclopedia. Retrieved July 15, 2023, from https://en.wikipedia.org/wiki/B-tree  
+[20] Bayer, Rudolf (1972). "Symmetric binary B-Trees: Data structure and maintenance algorithms". Acta Informatica. 1 (4): 290–306. doi:10.1007/BF00289509. S2CID 28836825.  
+[21]  Guibas, Leonidas J.; Sedgewick, Robert (1978). "A Dichromatic Framework for Balanced Trees". Proceedings of the 19th Annual Symposium on Foundations of Computer Science. pp. 8–21. doi:10.1109/SFCS.1978.3  
+[22] Andersson, Arne (1993, August). "Balanced search trees made simple". In Dehne, Frank; Sack, Jörg-Rüdiger; Santoro, Nicola; Whitesides, Sue (eds.). Algorithms and Data Structures (Proceedings). Lecture Notes in Computer Science. Vol. 709. Springer-Verlag Berlin Heidelberg. pp. 60–71. CiteSeerX 10.1.1.118.6192. doi:10.1007/3-540-57155-8_236. ISBN 978-3-540-57155-1.  
+[23] Okasaki, Chris (1999, January). "Red–black trees in a functional setting". Journal of Functional Programming. 9 (4): 471–477. doi:10.1017/S0956796899003494. ISSN 1469-7653. S2CID 20298262.  
+[24] Cormen, Thomas H.; Leiserson, Charles E.; Rivest, Ronald L.; Stein, Clifford (2001). "Red–Black Trees". Introduction to Algorithms (2nd ed.). MIT Press. pp. 273–301. ISBN 978-0-262-03293-3.  
+[25] Sedgewick, R. (2008). Left-leaning Red-Black Trees Robert Sedgewick.
