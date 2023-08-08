@@ -1241,9 +1241,9 @@ In conclusion, my study of Red-Black Trees emphasized their significance as a ba
 [6] Okasaki, Chris (1999, January). "Red–black trees in a functional setting". Journal of Functional Programming. 9 (4): 471–477. doi:10.1017/S0956796899003494. ISSN 1469-7653. S2CID 20298262.  
 [7] Cormen, Thomas H.; Leiserson, Charles E.; Rivest, Ronald L.; Stein, Clifford (2001). "Red–Black Trees". Introduction to Algorithms (2nd ed.). MIT Press. pp. 273–301. ISBN 978-0-262-03293-3.  
 [8] Sedgewick, R. (2008). Left-leaning Red-Black Trees Robert Sedgewick.  
-[9] JavaTpoint. Red-Black Tree. Retrieved July 15, 2023, from https://www.javatpoint.com/red-black-tree   
-[10] OpenGenus IQ. Time and Space Complexity of Red-Black Tree. Retrieved July 15, 2023, from https://iq.opengenus.org/time-and-space-complexity-of-red-black-tree/  
-[11] Wikipedia contributors. (2021, November). AVL tree. In Wikipedia, The Free Encyclopedia. Retrieved July 15, 2023, from https://en.wikipedia.org/wiki/AVL_tree  
+[9] JavaTpoint. Red-Black Tree. Retrieved July 15, 2023, from https://www.javatpoint.com/red-black-tree    
+[10] OpenGenus IQ. Time and Space Complexity of Red-Black Tree. Retrieved July 15, 2023, from https://iq.opengenus.org/time-and-space-complexity-of-red-black-tree/    
+[11] Wikipedia contributors. (2021, November). AVL tree. In Wikipedia, The Free Encyclopedia. Retrieved July 15, 2023, from https://en.wikipedia.org/wiki/AVL_tree   
 [12] Wikipedia contributors. (2023, March). B-tree. In Wikipedia, The Free Encyclopedia. Retrieved July 15, 2023, from https://en.wikipedia.org/wiki/B-tree  
 [13] Leung, C. Red-Black Trees. In Data Structures and Algorithms: A Comprehensive Guide. Retrieved July 15, 2023, from https://catherine-leung.gitbook.io/data-strutures-and-algorithms/red-black-trees  
 [14] GeeksforGeeks. Deletion in Red-Black Tree. GeeksforGeeks. Retrieved July 15, 2023, from https://www.geeksforgeeks.org/deletion-in-red-black-tree/  
