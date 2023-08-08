@@ -1241,7 +1241,7 @@ In conclusion, my study of Red-Black Trees emphasized their significance as a ba
 [6] Okasaki, Chris (1999, January). "Red–black trees in a functional setting". Journal of Functional Programming. 9 (4): 471–477. doi:10.1017/S0956796899003494. ISSN 1469-7653. S2CID 20298262.  
 [7] Cormen, Thomas H.; Leiserson, Charles E.; Rivest, Ronald L.; Stein, Clifford (2001). "Red–Black Trees". Introduction to Algorithms (2nd ed.). MIT Press. pp. 273–301. ISBN 978-0-262-03293-3.  
 [8] Sedgewick, R. (2008). Left-leaning Red-Black Trees Robert Sedgewick.
-[9] JavaTpoint. Red-Black Tree. Retrieved July 15, 2023, from https://www.javatpoint.com/red-black-tree  
+[9] JavaTpoint. Red-Black Tree. Retrieved July 15, 2023, from https://www.javatpoint.com/red-black-tree   
 [10] OpenGenus IQ. Time and Space Complexity of Red-Black Tree. Retrieved July 15, 2023, from https://iq.opengenus.org/time-and-space-complexity-of-red-black-tree/  
 [11] Wikipedia contributors. (2021, November). AVL tree. In Wikipedia, The Free Encyclopedia. Retrieved July 15, 2023, from https://en.wikipedia.org/wiki/AVL_tree  
 [12] Wikipedia contributors. (2023, March). B-tree. In Wikipedia, The Free Encyclopedia. Retrieved July 15, 2023, from https://en.wikipedia.org/wiki/B-tree  
@@ -1254,7 +1254,7 @@ In conclusion, my study of Red-Black Trees emphasized their significance as a ba
 [19] Baeldung. Red-Black Trees and Their Applications. Baeldung. Retrieved July 15, 2023, from https://www.baeldung.com/cs/red-black-trees-applications  
 [20] GeeksforGeeks. Applications, Advantages, and Disadvantages of Red-Black Tree. GeeksforGeeks. Retrieved July 15, 2023, from https://www.geeksforgeeks.org/applications-advantages-and-disadvantages-of-red-black-tree/  
 [21] Byorgey, B. Counting Inversions via Rank Queries. Brent's Blog. Retrieved July 15, 2023, from https://byorgey.wordpress.com/2019/12/18/counting-inversions-via-rank-queries/  
-[22] AskPython. Red-Black Tree in Python. AskPython. Retrieved July 15, 2023, from https://www.askpython.com/python/examples/red-black-tree-in-python
+[22] AskPython. Red-Black Tree in Python. AskPython. Retrieved July 15, 2023, from https://www.askpython.com/python/examples/red-black-tree-in-python  
 [23] Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein. 2009. Introduction to Algorithms, Third Edition (3rd. ed.). The MIT Press.  
 [24] Andrew Carnegie Mellon University. RedBlackTree. JavaDocs. Carnegie Mellon University. https://www.andrew.cmu.edu/user/mm6/95-771/examples/RedBlackTreeProject/dist/javadoc/redblacktreeproject/RedBlackTree.html#inOrderTraversal(redblacktreeproject.RedBlackNode)  
 [25] CodesDope. Data Structures - Red-Black Trees Deletion. CodesDope. Retrieved July 15, 2023, from https://www.codesdope.com/course/data-structures-red-black-trees-deletion/  
