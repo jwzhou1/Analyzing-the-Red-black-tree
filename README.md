@@ -1240,7 +1240,7 @@ In conclusion, my study of Red-Black Trees emphasized their significance as a ba
 [5] Andersson, Arne (1993, August). "Balanced search trees made simple". In Dehne, Frank; Sack, Jörg-Rüdiger; Santoro, Nicola; Whitesides, Sue (eds.). Algorithms and Data Structures (Proceedings). Lecture Notes in Computer Science. Vol. 709. Springer-Verlag Berlin Heidelberg. pp. 60–71. CiteSeerX 10.1.1.118.6192. doi:10.1007/3-540-57155-8_236. ISBN 978-3-540-57155-1.  
 [6] Okasaki, Chris (1999, January). "Red–black trees in a functional setting". Journal of Functional Programming. 9 (4): 471–477. doi:10.1017/S0956796899003494. ISSN 1469-7653. S2CID 20298262.  
 [7] Cormen, Thomas H.; Leiserson, Charles E.; Rivest, Ronald L.; Stein, Clifford (2001). "Red–Black Trees". Introduction to Algorithms (2nd ed.). MIT Press. pp. 273–301. ISBN 978-0-262-03293-3.  
-[8] Sedgewick, R. (2008). Left-leaning Red-Black Trees Robert Sedgewick.
+[8] Sedgewick, R. (2008). Left-leaning Red-Black Trees Robert Sedgewick.  
 [9] JavaTpoint. Red-Black Tree. Retrieved July 15, 2023, from https://www.javatpoint.com/red-black-tree   
 [10] OpenGenus IQ. Time and Space Complexity of Red-Black Tree. Retrieved July 15, 2023, from https://iq.opengenus.org/time-and-space-complexity-of-red-black-tree/  
 [11] Wikipedia contributors. (2021, November). AVL tree. In Wikipedia, The Free Encyclopedia. Retrieved July 15, 2023, from https://en.wikipedia.org/wiki/AVL_tree  
